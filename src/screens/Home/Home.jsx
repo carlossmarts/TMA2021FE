@@ -1,32 +1,29 @@
-import { makeStyles, CircularProgress } from '@material-ui/core';
-import React, {useState, useEffect} from 'react'
+import { makeStyles, CircularProgress, Grid } from '@material-ui/core';
+import React, { useState, useEffect } from 'react'
 import { Estilos } from '../../style/estilos';
 import { useLocalidadPresenter } from '../../presenter/localidadesPresenter';
+import { useLocalPresenter } from '../../presenter/localesPresenter';
 import { FiltroTexto } from '../../components/FiltroTexto';
-import { DataGrid } from '@material-ui/data-grid'
-import { ColumnasComercioXLocalidad } from './DatagridCols'
+import { CardLocal } from '../../components/CardLocal';
+
 
 const useStyles = makeStyles((theme) => Estilos(theme))
 
-const Home = ()=>{
-  
+const Home = () => {
+
   const classes = useStyles();
   //estados
   const [cargando, setCargando] = useState(true);
   const [localidad, setLocalidad] = useState("");
-  const [comercios, setComercios] = useState([
-                                              {id: 0, nombre: "Rotisería carlos", direccion:"mendoza 119"},
-                                              {id: 1, nombre: "Pizzería sebastian", direccion: "calle falsa 123"}
-                                            ])
 
   //hooks custom
-  const {localidades, setLocalidades, traerLocalidades} = useLocalidadPresenter();
+  const { localidades, setLocalidades, traerLocalidades } = useLocalidadPresenter();
 
   //useEffect
-  
-  useEffect(()=>{
-    traerLocalidades().then(data=>setLocalidades(data)).catch(err=>console.log(err))
-  },[])
+
+  useEffect(() => {
+    traerLocalidades().then(data => setLocalidades(data)).catch(err => console.log(err))
+  }, [])
 
   useEffect(() => {
     console.log("localidad: ", localidad)
@@ -36,10 +33,10 @@ const Home = ()=>{
 
     const municipios = ["Avellaneda", "Lanus", "Lomas de Zamora", "Almirante Brown"]
 
-    if(localidades.localidades){
+    if (localidades.localidades) {
       let mappedLocs = []   //todas
       let locs = []         //array final
-      mappedLocs = localidades.localidades.map( l => (
+      mappedLocs = localidades.localidades.map(l => (
         {
           id: l.id,
           nombre: l.nombre,
@@ -47,46 +44,59 @@ const Home = ()=>{
         }
       ))
 
-      municipios.forEach( m =>{
+      municipios.forEach(m => {
         let locsPorMuni = mappedLocs.filter(l => l.municipio === m)
         locs = [...locs, ...locsPorMuni]
-      } )
+      })
       setLocalidades(locs)
       setCargando(false)
     }
   }, [localidades])
 
-  //funciones
-return (
-  <>{
-    cargando 
+  const { comercios, setComercios, traerLocalesPorLocalidad } = useLocalPresenter();
+
+  useEffect(() => {
+    if (localidad)
+      traerLocalesPorLocalidad(localidad.nombre).then(data => setComercios(data)).catch(err => console.log(err))
+  }, [localidad])
+
+
+  //funciones                 
+
+  return (
+    <>{
+      cargando
         ?
-          <CircularProgress/>
-        :  
-          <FiltroTexto
-              opciones = {localidades}
-              setValor = {setLocalidad}
-              nombre = "localidad"
-          />
-      }
+        <CircularProgress />
+        :
+        <FiltroTexto
+          opciones={localidades}
+          setValor={setLocalidad}
+          nombre="localidad"
+        />
+    }
       {
         localidad && !cargando ?
-        <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={comercios}
-                columns = {ColumnasComercioXLocalidad()}
-                pageSize={10}
-                getRowId={row => row.id}
-                className={classes.grid}
-                hideFooterSelectedRowCount={true}
-                autoHeight={true}
-            />
-        </div>
-        :
-        <div></div>
+
+          <div style={{ height: 400, width: '100%' }}>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+            >
+              {comercios.map(comercio => {
+                return <CardLocal 
+                nombreLocal={comercio.nombre}
+                telefono={comercio.telefono}  />
+              })}
+            </Grid>
+          </div>
+          :
+          <div style={{ height: 400, width: '100%' }}>
+          </div>
       }
-      </>
-    );
+    </>
+  );
 }
 
 
