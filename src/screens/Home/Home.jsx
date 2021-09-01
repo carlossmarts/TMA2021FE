@@ -1,10 +1,10 @@
-import { makeStyles, CircularProgress, Grid } from '@material-ui/core';
+import { makeStyles, LinearProgress } from '@material-ui/core';
 import React, { useState, useEffect } from 'react'
 import { Estilos } from '../../style/estilos';
 import { useLocalidadPresenter } from '../../presenter/localidadesPresenter';
 import { useLocalPresenter } from '../../presenter/localesPresenter';
 import { FiltroTexto } from '../../components/FiltroTexto';
-import { CardLocal } from '../../components/CardLocal';
+import { ListaLocales } from '../../components/ListaLocales';
 
 
 const useStyles = makeStyles((theme) => Estilos(theme))
@@ -14,10 +14,12 @@ const Home = () => {
   const classes = useStyles();
   //estados
   const [cargando, setCargando] = useState(true);
+  const [cargandoLocales, setCargandoLocales] = useState(true);
   const [localidad, setLocalidad] = useState("");
 
   //hooks custom
   const { localidades, setLocalidades, traerLocalidades } = useLocalidadPresenter();
+  const { comercios, setComercios, traerLocalesPorLocalidad } = useLocalPresenter();
 
   //useEffect
 
@@ -25,11 +27,7 @@ const Home = () => {
     traerLocalidades().then(data => setLocalidades(data)).catch(err => console.log(err))
   }, [])
 
-  useEffect(() => {
-    console.log("localidad: ", localidad)
-  }, [localidad])
-
-  useEffect(() => {
+   useEffect(() => {
 
     const municipios = ["Avellaneda", "Lanus", "Lomas de Zamora", "Almirante Brown"]
 
@@ -53,11 +51,16 @@ const Home = () => {
     }
   }, [localidades])
 
-  const { comercios, setComercios, traerLocalesPorLocalidad } = useLocalPresenter();
-
   useEffect(() => {
-    if (localidad)
-      traerLocalesPorLocalidad(localidad.nombre).then(data => setComercios(data)).catch(err => console.log(err))
+    if (localidad) {
+      setCargandoLocales(true)
+      traerLocalesPorLocalidad(localidad.nombre).then((data) => {
+        setComercios(data)
+        setCargandoLocales(false)
+      }
+      ).catch(err => console.log(err))
+    } else
+      setCargandoLocales(true)
   }, [localidad])
 
 
@@ -67,7 +70,11 @@ const Home = () => {
     <>{
       cargando
         ?
-        <CircularProgress />
+        <div container
+          direction="column"
+          alignItems="center" >
+          <LinearProgress />
+        </div>
         :
         <FiltroTexto
           opciones={localidades}
@@ -76,23 +83,13 @@ const Home = () => {
         />
     }
       {
-        localidad && !cargando ?
-
-          <div style={{ height: 400, width: '100%' }}>
-            <Grid
-              container
-              direction="column"
-              alignItems="center"
-            >
-              {comercios.map(comercio => {
-                return <CardLocal 
-                nombreLocal={comercio.nombre}
-                telefono={comercio.telefono}  />
-              })}
-            </Grid>
-          </div>
+        localidad ?
+          cargandoLocales ?
+            <LinearProgress />
+            :
+            <ListaLocales comercios={comercios} />
           :
-          <div style={{ height: 400, width: '100%' }}>
+          <div>
           </div>
       }
     </>
