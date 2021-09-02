@@ -1,6 +1,12 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Estilos } from "../style/estilos";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Estilos } from '../style/estilos';
+import PhoneIcon from '@material-ui/icons/Phone';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles((theme) => Estilos(theme));
 
