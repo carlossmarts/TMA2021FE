@@ -12,14 +12,12 @@ export const CardLocal = (props) => {
   const {
     nombreLocal,
     telefono,
-    minEntrega,
-    MaxEntrega,
-    logo
+    urlLogo
   } = props
 
   return (
     <div class={classes.cardHorizontal}>
-      <img class={classes.imgLocal} src="local-logo.png" alt="test"></img>
+      <img class={classes.imgLocal} src={urlLogo} alt="test"></img>
       <div class={classes.textoCardLocal}>
         <div class='titulo-local'>{nombreLocal}</div>
         <div class='entrega-local'> Entrega entre 20 y 30 minutos</div>
