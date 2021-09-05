@@ -8,7 +8,7 @@ import { CardLocal } from './CardLocal'
 
 const useStyles = makeStyles((theme) => Estilos(theme))
 
-export const ListaLocales = (props) => {
+export const ListaComercios = (props) => {
 
   //Estilos
   const classes = useStyles();
@@ -31,9 +31,11 @@ export const ListaLocales = (props) => {
           :
           comercios.map(comercio => {
             return <CardLocal
+              idComercio= {comercio.idComercio}
               nombreLocal={comercio.nombre}
               telefono={comercio.telefono}
-              urlLogo= {comercio.logo} />
+              urlLogo= {comercio.logo}
+              key={comercio.idComercio} />
           })
 
         }
@@ -42,5 +44,5 @@ export const ListaLocales = (props) => {
   );
 };
 
-export default ListaLocales
+export default ListaComercios
 

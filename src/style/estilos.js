@@ -28,7 +28,6 @@ export const Estilos = theme => {
       padding: "12px",
       margin: "0px",
       "background-color": "white",
-      "width": 750,
       marginBottom: theme.spacing(2),
     },
     imgLocal: {

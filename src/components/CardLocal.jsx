@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import StarIcon from '@material-ui/icons/Star';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => Estilos(theme));
 
@@ -15,10 +16,17 @@ export const CardLocal = (props) => {
   const classes = useStyles();
 
   //parametros
-  const { nombreLocal, telefono, urlLogo } = props;
+  const {idComercio, nombreLocal, telefono, urlLogo } = props;
+
+  //hooks
+  const history = useHistory()
+
+  const irAComercio = ()=>{
+   history.push(`/comercio/${idComercio}`)
+  }
 
   return (
-    <div className={classes.cardHorizontal}>
+    <div className={classes.cardHorizontal} onClick={irAComercio}>
       <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>

@@ -1,4 +1,4 @@
-import { TextField, makeStyles } from '@material-ui/core';
+import { TextField, makeStyles, Grid, Box } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { Estilos } from '../style/estilos';
 
@@ -16,16 +16,33 @@ export const FiltroTexto = (props) => {
     } = props
 
     return (
-        <div className={classes.root}>
-              <Autocomplete 
-              id={nombre}
-              options={opciones}
-              getOptionLabel={op => op.nombre}
-              style={{margin: 8, width:'50%'}}
-              renderInput={(params) => <TextField {...params} label={`ingresar ${nombre}`} variant="outlined"/>}
-              onChange = {(event, value)=>setValor(value)}
-              >
-            </Autocomplete>
-          </div>
+        <Grid
+            container
+            spacing={8}
+            direction="row"
+            justify="center"
+            alignItems="center"
+            alignContent="center"
+            wrap="nowrap"
+
+        >
+            <Grid item xs={10} sm={8} md={6} >
+                <Box m={4}>
+                    <Autocomplete
+                        fullWidth
+                        id={nombre}
+                        options={opciones}
+                        getOptionLabel={op => op.nombre}
+                        renderInput={(params) => <TextField {...params} label={`ingresar ${nombre}`} variant="outlined" />}
+                        onChange={(event, value) => setValor(value)}
+                    >
+                    </Autocomplete>
+                </Box>
+
+            </Grid>
+
+        </Grid>
+
+
     )
 }
