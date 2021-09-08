@@ -1,36 +1,87 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useComercioPresenter } from '../../presenter/comerciosPresenter'
+import { useComidaPresenter } from '../../presenter/comidasPresenter'
 import Typography from '@material-ui/core/Typography'
+import { Carrito } from '../../components/Carrito'
+import { ListaProductos } from '../../components/ListaProductos'
+import { LinearProgress, Grid } from '@material-ui/core';
 
 export const Comercio = () => {
 
     //Hooks
-    const {id} =  useParams()
-    const {traerComercioPorId} = useComercioPresenter()
+    const { id } = useParams()
+    const { traerComercioPorId } = useComercioPresenter()
+    const { comidas, setComidas, traerComidasPorComercio } = useComidaPresenter();
 
     //Estados
+    const [cargando, setCargando] = useState(true);
     const [comercio, setComercio] = useState({})
+    const [cartItems, setCartItems] = useState([]);
+
 
     //al cargar el componente se trae el comercio por id
     useEffect(() => {
         traerComercioPorId(id).then(data => setComercio(data)).catch(err => console.error(err))
     }, [])
 
-    useEffect(()=>{
-        if(comercio){
+    useEffect(() => {
+        if (id !== 8) {
+            traerComidasPorComercio(id).then((data) => {
+                setComidas(data)
+                setCargando(false)
+            }).catch(err => console.log(err))
+        }
+    }, [id])
+
+    useEffect(() => {
+        if (comercio) {
             console.log(comercio)
         }
     }, [comercio])
 
+    useEffect(() => {
+        console.log("COMIDAS: " + JSON.stringify(comidas))
+    }, [comidas])
+
+    const onAdd = (product) => {
+        const exist = cartItems.find((x) => x.idProducto === product.idProducto);
+        if (exist) {
+            setCartItems(
+                cartItems.map((x) =>
+                    x.idProducto === product.idProducto ? { ...exist, qty: exist.qty + 1 } : x
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...product, qty: 1 }]);
+        }
+    };
+
     return (
-        <Fragment>
-            <Typography variant="h4" color="initial">
-                {comercio ?
-                 comercio.nombre
-                : "asd"
+        <div>
+            <Fragment>
+                <Typography variant="h4" color="initial">
+                    {comercio ?
+                        comercio.nombre
+                        : "asd"
+                    }
+                </Typography>
+            </Fragment>
+            <Grid container
+                direction="row"
+                justifyContent="center"
+                alignItems="left">
+                {
+                    !comidas.length ?
+                        <LinearProgress />
+                        :
+                        <ListaProductos comidas={comidas} onAdd={onAdd}></ListaProductos>
                 }
-            </Typography>
-        </Fragment>
+                <Carrito
+                    cartItems={cartItems}
+                    onAdd={onAdd}
+                ></Carrito>
+            </Grid>
+        </div >
     )
 }

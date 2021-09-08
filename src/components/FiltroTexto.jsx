@@ -1,13 +1,8 @@
-import { TextField, makeStyles, Grid, Box } from '@material-ui/core';
+import { TextField, Grid, Box } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { Estilos } from '../style/estilos';
-
-const useStyles = makeStyles((theme) => Estilos(theme))
 
 export const FiltroTexto = (props) => {
     //Estilos
-    const classes = useStyles();
-
     //parametros
     const {
         opciones,
