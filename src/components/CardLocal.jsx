@@ -27,7 +27,6 @@ export const CardLocal = (props) => {
 
   return (
     <div className={classes.cardHorizontal} onClick={irAComercio}>
-      <Paper className={classes.paper}>
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>
@@ -60,7 +59,6 @@ export const CardLocal = (props) => {
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
     </div>
   );
 };
