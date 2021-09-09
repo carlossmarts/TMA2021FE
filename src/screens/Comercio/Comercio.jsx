@@ -5,7 +5,7 @@ import { useComidaPresenter } from '../../presenter/comidasPresenter'
 import Typography from '@material-ui/core/Typography'
 import { Carrito } from '../../components/Carrito'
 import { ListaProductos } from '../../components/ListaProductos'
-import { LinearProgress, Grid } from '@material-ui/core';
+import { LinearProgress, Grid, Box } from '@material-ui/core';
 
 export const Comercio = () => {
 
@@ -59,18 +59,19 @@ export const Comercio = () => {
 
     return (
         <div>
-            <Fragment>
+            <Box px={5} m={2}>
                 <Typography variant="h4" color="initial">
                     {comercio ?
                         comercio.nombre
-                        : "asd"
+                        : "El comercio no existe"
                     }
                 </Typography>
-            </Fragment>
+            </Box>
             <Grid container
                 direction="row"
                 justifyContent="center"
-                alignItems="left">
+                alignItems="left"
+                >
                 {
                     !comidas.length ?
                         <LinearProgress />
