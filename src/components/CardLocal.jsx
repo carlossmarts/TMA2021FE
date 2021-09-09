@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Estilos } from '../style/estilos';
 import PhoneIcon from '@material-ui/icons/Phone';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import StarIcon from '@material-ui/icons/Star';
@@ -26,7 +26,7 @@ export const CardLocal = (props) => {
   }
 
   return (
-    <div className={classes.cardHorizontal} onClick={irAComercio}>
+    <Box className={classes.cardHorizontal} width='50%' onClick={irAComercio}>
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>
@@ -59,7 +59,7 @@ export const CardLocal = (props) => {
             </Grid>
           </Grid>
         </Grid>
-    </div>
+    </Box>
   );
 };
 
