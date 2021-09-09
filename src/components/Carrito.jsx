@@ -11,11 +11,11 @@ export const Carrito = (props) => {
 
     useEffect(() => {
         let text =
-            "Hola, vi tu menu en PedidosYa y quiero hacer el siguiente pedido: "
+            "Hola, vi tu menu en PedidosYa y quiero hacer el siguiente pedido: \n "
         cartItems.map((item) => (
-            text = text.concat(`${item.nombre} (${item.qty} x $${item.precio.toFixed(2)}), `)
+            text = text.concat(`${item.nombre} (${item.qty} x $${item.precio.toFixed(2)}) \n `)
         ))
-        text = text.concat(` Total: $${totalPrice}. Mi direccion es: ${direccion}. Gracias`)
+        text = text.concat(`*Total:* $${totalPrice}. \n Mi dirección es: ${direccion}. Gracias`)
 
         setMensaje(`https://wa.me/549${telefono}?text=${encodeURI(text)}`)
     }, [cartItems, direccion])
