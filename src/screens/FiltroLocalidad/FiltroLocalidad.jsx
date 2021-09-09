@@ -1,17 +1,12 @@
-import { makeStyles, LinearProgress, Grid } from '@material-ui/core';
+import { LinearProgress, Grid } from '@material-ui/core';
 import React, { useState, useEffect, Fragment } from 'react'
-import { Estilos } from '../../style/estilos';
 import { useLocalidadPresenter } from '../../presenter/localidadesPresenter';
 import { useComercioPresenter } from '../../presenter/comerciosPresenter';
 import { FiltroTexto } from '../../components/FiltroTexto';
 import { ListaComercios } from '../../components/ListaComercios';
 
-
-const useStyles = makeStyles((theme) => Estilos(theme))
-
 const FiltroLocalidad = () => {
 
-  const classes = useStyles();
   //estados
   const [cargando, setCargando] = useState(true);
   const [cargandoComercios, setCargandoComercios] = useState(true);
@@ -27,9 +22,9 @@ const FiltroLocalidad = () => {
     traerLocalidades().then(data => setLocalidades(data)).catch(err => console.log(err))
   }, [])
 
-   useEffect(() => {
-      console.log(localidades)
-      setCargando(false)
+  useEffect(() => {
+    console.log(localidades)
+    setCargando(false)
   }, [localidades])
 
   useEffect(() => {
@@ -50,20 +45,20 @@ const FiltroLocalidad = () => {
   return (
     <Fragment>
       {
-      cargando
-        ?
-        <Grid container
-          direction="column"
-          alignItems="center" >
-          <LinearProgress />
-        </Grid>
-        :
-        <FiltroTexto
-          opciones={localidades}
-          setValor={setLocalidad}
-          nombre="localidad"
-        />
-    }
+        cargando
+          ?
+          <Grid container
+            direction="column"
+            alignItems="center" >
+            <LinearProgress />
+          </Grid>
+          :
+          <FiltroTexto
+            opciones={localidades}
+            setValor={setLocalidad}
+            nombre="localidad"
+          />
+      }
       {
         localidad ?
           cargandoComercios ?

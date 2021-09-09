@@ -78,6 +78,7 @@ export const Comercio = () => {
                         <ListaProductos comidas={comidas} onAdd={onAdd}></ListaProductos>
                 }
                 <Carrito
+                    telefono={comercio.telefono}
                     cartItems={cartItems}
                     onAdd={onAdd}
                 ></Carrito>
