@@ -35,6 +35,13 @@ export const Estilos = theme => {
       'padding-right': '12px',
       'padding-top': '5px'
     },
+    imgPlatillo: {
+      'border-radius': '20px',
+      'padding-right': '12px',
+      'padding-top': '5px',
+      'width': '100%',
+      'max-width': '250px'
+    },
     textoCardLocal: {
       'padding-top': '5px',
       'border-radius': '20px',
