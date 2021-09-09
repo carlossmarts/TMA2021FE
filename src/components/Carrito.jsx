@@ -1,4 +1,4 @@
-import { Grid, Paper, TextField } from '@material-ui/core';
+import { Grid, Paper, TextField, Button, Box } from '@material-ui/core';
 import React, { useState, useEffect, Fragment } from 'react'
 
 export const Carrito = (props) => {
@@ -21,12 +21,11 @@ export const Carrito = (props) => {
     }, [cartItems, direccion])
 
     return (
-        <Paper style={{ height: 400, width: '35%' }}>
+        <Paper style={{ width: '35%' }}>
             <Grid
                 container
                 direction="column"
                 alignItems="center"
-                spacing={50}
             >
                 <h2>Tu pedido</h2>
                 <div>
@@ -63,31 +62,36 @@ export const Carrito = (props) => {
                                 </div>
                             </div>
                             <hr />
+                            <Grid container direction="column" item xs spacing={2} p={50}>
+                                <Box my={1}>
+                                    <TextField
+                                        m={50}
+                                        id="outlined-multiline-static"
+                                        multiline
+                                        rows={4}
+                                        fullWidth
+                                        label="Ingrese su dirección"
+                                        variant="outlined"
+                                        value={direccion}
+                                        onChange={e => setDireccion(e.target.value)} />
+                                </Box>
+                                <Box >
+                                    <Button variant="contained" size="small" onClick={() => {
+                                        direccion === '' ?
+                                            alert('No te olvides de agregar la dirección ;)')
+                                            :
+                                            window.open(mensaje, "_blank")
+                                    }}>
+                                        Enviar Pedido
+                                    </Button>
+                                </Box>
 
-                            <div className="col-2">
-                                <TextField
-                                    id="outlined-multiline-static"
-                                    multiline
-                                    rows={4}
-                                    fullWidth
-                                    label="Ingrese su dirección"
-                                    variant="outlined"
-                                    value={direccion}
-                                    onChange={e => setDireccion(e.target.value)} />
-                            </div>
-                            <button onClick={() => {
-                                direccion == '' ?
-                                    alert('No te olvides de agregar la dirección ;)')
-                                    :
-                                    window.open(mensaje, "_blank")
-                            }}>
-                                Enviar Pedido
-                            </button>
+                            </Grid>
                         </>
                     )}
                 </div>
             </Grid>
-        </Paper>
+        </Paper >
     );
 }
 
