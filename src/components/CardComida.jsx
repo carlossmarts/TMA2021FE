@@ -1,10 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Estilos } from '../style/estilos';
-import { Grid, Box } from '@material-ui/core';
+import { Grid, Box, IconButton, Tooltip } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 const useStyles = makeStyles((theme) => Estilos(theme));
 
@@ -42,7 +43,12 @@ export const CardComida = (props) => {
                                     <Typography variant="body2" color="textSecondary">
                                         {"$" + comida.precio}
                                     </Typography>
-                                    <button onClick={() => onAdd(comida)}>Agregar</button>
+                                    <Tooltip title="Agregar al carrito">
+                                        <IconButton aria-label="" onClick={() => onAdd(comida)}>
+                                            <AddShoppingCartIcon/>
+                                        </IconButton>
+                                    </Tooltip>
+                                    {/* <button onClick={() => onAdd(comida)}>Agregar</button> */}
                                 </Grid>
                             </Grid>
                         </Grid>

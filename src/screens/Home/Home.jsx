@@ -1,21 +1,15 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Comercio } from '../Comercio/Comercio';
+import React, {useState, useEffect} from 'react'
+
 import FiltroLocalidad from '../FiltroLocalidad/FiltroLocalidad';
 
-const Home = () => {
+
+const Home = (props) => {
 
   return (
-    <BrowserRouter basename="/">
-      <Switch>
-        <Route exact path={'/'}>
-          <FiltroLocalidad />
-        </Route>
-        <Route exact path={'/comercio/:id'}>
-          <Comercio />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <>
+    <FiltroLocalidad />
+    </>
+    
   );
 }
 
