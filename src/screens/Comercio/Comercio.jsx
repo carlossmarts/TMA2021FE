@@ -7,7 +7,7 @@ import { Carrito } from '../../components/Carrito'
 import { ListaProductos } from '../../components/ListaProductos'
 import { LinearProgress, Grid, Box } from '@material-ui/core';
 
-export const Comercio = () => {
+const Comercio = () => {
 
     //Hooks
     const { id } = useParams()
@@ -59,8 +59,8 @@ export const Comercio = () => {
 
     return (
         <div>
-            <Box px={5} m={2}>
-                <Typography variant="h4" color="initial">
+            <Box px={5} m={2} display="flex" justifyContent="center">
+                <Typography variant="h4" color="initial" style={{ fontWeight: "bold" }}>
                     {comercio ?
                         comercio.nombre
                         : "El comercio no existe"
@@ -71,7 +71,7 @@ export const Comercio = () => {
                 direction="row"
                 justifyContent="center"
                 alignItems="left"
-                >
+            >
                 {
                     !comidas.length ?
                         <LinearProgress />
@@ -87,3 +87,5 @@ export const Comercio = () => {
         </div >
     )
 }
+
+export default Comercio;

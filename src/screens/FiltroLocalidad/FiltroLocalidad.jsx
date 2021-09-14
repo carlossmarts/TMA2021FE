@@ -22,10 +22,10 @@ const FiltroLocalidad = () => {
     traerLocalidades().then(data => setLocalidades(data)).catch(err => console.log(err))
   }, [])
 
-  useEffect(() => {
-    console.log(localidades)
-    setCargando(false)
-  }, [localidades])
+    useEffect(() => {
+      console.log(localidades)
+      setCargando(false)
+    }, [localidades])
 
   useEffect(() => {
     if (localidad) {
