@@ -40,7 +40,7 @@ export const Estilos = theme => {
       'padding-right': '12px',
       'padding-top': '5px',
       'width': '100%',
-      'max-width': '250px'
+      'max-width': '200px'
     },
     textoCardLocal: {
       'padding-top': '5px',
