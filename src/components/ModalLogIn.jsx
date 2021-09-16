@@ -9,6 +9,10 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
 import {  IconButton, Box } from '@material-ui/core'
+import { Alert } from '@material-ui/lab'
+
+import { useHistory } from 'react-router'
+import { useUsuarioPresenter } from '../presenter/usuarioPresenter'
 
 
 const ModalLogIn = (props) => {
@@ -19,14 +23,14 @@ const ModalLogIn = (props) => {
     const {
         open,
         setOpen,
-        setUser
+        setIdUser
     } = props;
 
     //******************** 
     // Hooks
     //********************
 
-
+    const {traerIdUsuario} = useUsuarioPresenter()
 
     //******************** 
     // Estados
@@ -38,6 +42,8 @@ const ModalLogIn = (props) => {
 
     const [password, setPassword] = useState("");
     const [errPass, setErrPass] = useState("");
+
+    const [errorLogin, setErrorLogin] = useState("");
 
     //******************** 
     // setters
@@ -80,12 +86,22 @@ const ModalLogIn = (props) => {
 
     }
 
-    const validarYEnviar = () => {
+    const validarYEnviar = async () => {
         const formOK = validarCampos();
         if(formOK){
-            setUser(username); //Esto se tiene que cambiar por una llamada a la api y redirigir a la página de gestion
+            try {
+                const idUsuario = await traerIdUsuario(username, password);
+                console.log("id de usuario recuperado en login", idUsuario);
+                if(idUsuario){
+                    setIdUser(idUsuario);
+                    cerrar()
+                } else{
+                    setErrorLogin("Error, verifique usuario y contraseña")
+                }
+            } catch (error) {
+                console.log(error)
+            }
         }
-        cerrar()
     }
 
     const validarCampos = () => {
@@ -143,7 +159,15 @@ const ModalLogIn = (props) => {
                        }
                     </IconButton>
                   </Box>
-
+                  
+                  <Box display="flex" justifyContent="conter">
+                      {
+                          errorLogin?
+                            <Alert severity="warning">{errorLogin} </Alert>
+                        :
+                        <></>
+                      }
+                    </Box>
             </DialogContent>
             <DialogActions style={{display:"flex", justifyContent: "space-around"}}>
                 <Button onClick={validarYEnviar} variant="contained" color="secondary">
@@ -157,4 +181,4 @@ const ModalLogIn = (props) => {
     )
 }
 
-export default ModalLogIn;
+export default  ModalLogIn;

@@ -24,7 +24,7 @@ const Navbar = (props) => {
     const {
         setOpenRegistro,
         setOpenLogin,
-        setUser
+        setIdUser
       } = props;
 
     const classes = useStyles();
@@ -47,13 +47,19 @@ const Navbar = (props) => {
         handleClose();
     }
 
+    const irAGestion = ()=>{
+        setOpenLogin(true)
+        handleClose()
+        history.push("/gestion");
+    }
+
     const abrirModalLogin = ()=>{
         setOpenLogin(true);
         handleClose();
     }
 
     const cerrarSesion = ()=>{
-        setUser("")
+        setIdUser(0)
         handleClose()
         irAHome()
     }
@@ -92,9 +98,9 @@ const Navbar = (props) => {
                                 <MenuItem onClick={abrirModalRegistro}>Registrar mi comercio</MenuItem>
 
                                 {
-                                    localStorage.getItem("user") === ""
+                                    parseInt(localStorage.getItem("idUsuario")) === 0
                                     ?
-                                        <MenuItem onClick={abrirModalLogin}>Ingresar a gestion comercial</MenuItem>
+                                        <MenuItem onClick={irAGestion}>Ingresar a gestion comercial</MenuItem>
                                     :
                                         <MenuItem onClick={cerrarSesion}>Cerrar Sesión</MenuItem>
                                 }

@@ -13,13 +13,14 @@ const App = () => {
 
   const [openModalLogIn, setOpenModalLogIn] = useState(false)
   const [openModalRegistro, setOpenModalRegistro] = useState(false)
-  const [user, setUser] = useState("")
+
+  const [idUser, setIdUser] = useState(0);
 
 
   useEffect(() => {
-    console.log(user);
-    localStorage.setItem("user", user);
-  }, [user])
+    console.log("IdUsuario almacenado en local storage: ", idUser);
+    localStorage.setItem("idUsuario", idUser);
+  }, [idUser])
 
   return (
     <ThemeProvider theme={theme}>
@@ -28,17 +29,17 @@ const App = () => {
         <Navbar
             setOpenLogin={setOpenModalLogIn}
             setOpenRegistro={setOpenModalRegistro}
-            setUser={setUser}
+            setIdUser={setIdUser}
         />
          <ModalRegComercio
           open={openModalRegistro}
           setOpen={setOpenModalRegistro}
-          setUser={setUser}
+          setIdUser={setIdUser}
         />
         <ModalLogIn
           open={openModalLogIn}
           setOpen={setOpenModalLogIn}
-          setUser={setUser}
+          setIdUser={setIdUser}
         />
         
         <Switch>
@@ -56,17 +57,6 @@ const App = () => {
 
        
       </BrowserRouter>
-
-      <ModalRegComercio
-        open={openModalRegistro}
-        setOpen={setOpenModalRegistro}
-        setUser={setUser}
-      />
-      <ModalLogIn
-        open={openModalLogIn}
-        setOpen={setOpenModalLogIn}
-        setUser={setUser}
-      />
 
     </ThemeProvider>
   );
