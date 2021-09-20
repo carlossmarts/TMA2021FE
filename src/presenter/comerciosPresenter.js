@@ -25,9 +25,14 @@ export const useComercioPresenter = () => {
         return res;
     }
 
+    const altaComercioYUsuario = async (body) => {
+        const res = await ComerciosApi.altaComercioYUsuario(body);
+        return res;
+    }
+
     return {
         comercios, setComercios,
         traerComerciosPorLocalidad, traerComercioPorIdDeUsuario,
-        traerComercioPorId, actualizarComercio
+        traerComercioPorId, actualizarComercio, altaComercioYUsuario
     }
 }

@@ -9,10 +9,16 @@ export const useUsuarioPresenter = ()=>{
         const res = await UsuarioApi.traerIdUsuario(username, password)
         return res;
     }
+
+    const traerUsuarioPorUsername = async (username)=>{
+        const res = await UsuarioApi.traerUsuarioPorUsername(username);
+        return res;
+    }
     
     return {
         user,
         setUser,
-        traerIdUsuario
+        traerIdUsuario,
+        traerUsuarioPorUsername
     }
 }

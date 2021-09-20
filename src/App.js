@@ -5,42 +5,20 @@ import { ThemeProvider } from '@material-ui/styles'
 import theme from './style/themeConfig'
 import Comercio from './screens/Comercio/Comercio'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import ModalRegComercio from './components/ModalRegComercio'
-import ModalLogIn from './components/ModalLogIn'
 import GestionComercio from './screens/GestionComercio/GestionComercio'
+import Login from './screens/Login'
+import Registro from './screens/Registro'
 
 const App = () => {
 
   const [openModalLogIn, setOpenModalLogIn] = useState(false)
   const [openModalRegistro, setOpenModalRegistro] = useState(false)
 
-  const [idUser, setIdUser] = useState(0);
-
-
-  useEffect(() => {
-    console.log("IdUsuario almacenado en local storage: ", idUser);
-    localStorage.setItem("idUsuario", idUser);
-  }, [idUser])
-
   return (
     <ThemeProvider theme={theme}>
 
       <BrowserRouter basename="/">
-        <Navbar
-            setOpenLogin={setOpenModalLogIn}
-            setOpenRegistro={setOpenModalRegistro}
-            setIdUser={setIdUser}
-        />
-         <ModalRegComercio
-          open={openModalRegistro}
-          setOpen={setOpenModalRegistro}
-          setIdUser={setIdUser}
-        />
-        <ModalLogIn
-          open={openModalLogIn}
-          setOpen={setOpenModalLogIn}
-          setIdUser={setIdUser}
-        />
+        <Navbar/>
         
         <Switch>
           <Route exact path={'/'}>
@@ -52,6 +30,13 @@ const App = () => {
           <Route exact path={'/gestion'}>
             <GestionComercio />
           </Route>
+          <Route exact path={'/login'}>
+            <Login/>
+          </Route>
+          <Route exact path={'/registro'}>
+            <Registro />
+          </Route>
+
 
         </Switch>
 

@@ -43,14 +43,13 @@ const Navbar = (props) => {
     };
 
     const abrirModalRegistro = ()=>{
-        setOpenRegistro(true);
         handleClose();
+        history.push("/registro")
     }
 
     const irAGestion = ()=>{
-        setOpenLogin(true)
         handleClose()
-        history.push("/gestion");
+        history.push("/login");
     }
 
     const abrirModalLogin = ()=>{
