@@ -43,7 +43,7 @@ export const ListaCategorias = (props) => {
                                             {categoria !== seleccionada ?
                                                 <Button variant="text" cursor="pointer" onClick={() => setCategoria(categoria)}>{categoria.nombre}</Button>
                                                 :
-                                                <Button variant="contained" cursor="pointer" onClick={() => setCategoria(categoria)}>{categoria.nombre}</Button>
+                                                <Button variant="contained" cursor="pointer" onClick={() => setCategoria("")}>{categoria.nombre}</Button>
                                             }
                                         </div>
                                     })}

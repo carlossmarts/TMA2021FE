@@ -62,15 +62,24 @@ const FiltroLocales = () => {
   }, [localidad])
 
   useEffect(() => {
-    if (localidad) {
+    setCategoria("")
+  }, [localidad])
+
+  useEffect(() => {
+    if (localidad && categoria) {
       setCargandoComercios(true)
       traerComerciosPorLocalidadYCategoria(localidad.nombre, categoria.idCategoria).then((data) => {
         setComercios(data)
         setCargandoComercios(false)
       }
       ).catch(err => console.log(err))
-    } else
+    } else {
       setCargandoComercios(true)
+      traerComerciosPorLocalidad(localidad.nombre).then((data) => {
+        setComercios(data)
+        setCargandoComercios(false)
+      })
+    }
   }, [categoria])
 
   //funciones                 
