@@ -46,6 +46,9 @@ export const Estilos = theme => {
       'padding-top': '5px',
       'border-radius': '20px',
     },
+    listadoCategorias: {
+      'position': 'sticky',
+    },
     acciones: {
       display: "flex",
       justifyContent: "between"

@@ -1,18 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Estilos } from '../style/estilos';
 import { Grid } from '@material-ui/core';
 import { CardLocal } from './CardLocal'
 
-
-
-const useStyles = makeStyles((theme) => Estilos(theme))
-
 export const ListaComercios = (props) => {
-
-  //Estilos
-  const classes = useStyles();
-
   //parametros
   const {
     comercios

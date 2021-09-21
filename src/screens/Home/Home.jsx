@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
-import FiltroLocalidad from '../FiltroLocalidad/FiltroLocalidad';
+import FiltroLocales from '../FiltroLocales/FiltroLocales';
 
 
 const Home = (props) => {
 
   return (
     <>
-    <FiltroLocalidad />
+    <FiltroLocales />
     </>
     
   );

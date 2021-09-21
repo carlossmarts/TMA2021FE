@@ -10,6 +10,11 @@ export const useComercioPresenter = () => {
         return res;
     }
 
+    const traerComerciosPorLocalidadYCategoria = async (localidad, categoria) => {
+        const res = await ComerciosApi.traerComerciosPorLocalidadYCategoria(localidad, categoria);
+        return res;
+    }
+
     const traerComercioPorId = async (id) =>{
         const res = await ComerciosApi.traerComercioPorId(id);
         return res;
@@ -18,6 +23,7 @@ export const useComercioPresenter = () => {
     return {
         comercios, setComercios,
         traerComerciosPorLocalidad,
+        traerComerciosPorLocalidadYCategoria,
         traerComercioPorId
     }
 }

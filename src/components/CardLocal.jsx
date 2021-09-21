@@ -26,7 +26,7 @@ export const CardLocal = (props) => {
   }
 
   return (
-    <Box className={classes.cardHorizontal} width='50%' onClick={irAComercio}>
+    <Box className={classes.cardHorizontal} width='100%' onClick={irAComercio}>
         <Grid container spacing={2}>
           <Grid item>
             <ButtonBase className={classes.image}>
