@@ -3,13 +3,11 @@ import React from 'react'
 import FiltroLocales from '../FiltroLocales/FiltroLocales';
 
 
-const Home = (props) => {
-
+const Home = () => {
   return (
     <>
     <FiltroLocales />
     </>
-    
   );
 }
 

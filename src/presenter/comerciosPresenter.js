@@ -20,10 +20,25 @@ export const useComercioPresenter = () => {
         return res;
     }
 
+    const traerComercioPorIdDeUsuario = async (id) => {
+        const res = await ComerciosApi.traerComercioPorIdDeUsuario(id);
+        return res;
+    }
+
+    const actualizarComercio = async (body) => {
+        const res = await ComerciosApi.actualizarComercio(body);
+        return res;
+    }
+
+    const altaComercioYUsuario = async (body) => {
+        const res = await ComerciosApi.altaComercioYUsuario(body);
+        return res;
+    }
+
     return {
         comercios, setComercios,
-        traerComerciosPorLocalidad,
+        traerComerciosPorLocalidad, traerComercioPorIdDeUsuario,
         traerComerciosPorLocalidadYCategoria,
-        traerComercioPorId
+        traerComercioPorId, actualizarComercio, altaComercioYUsuario
     }
 }

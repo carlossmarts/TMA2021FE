@@ -1,5 +1,5 @@
 import { Grid, Paper, TextField, Button, Box } from '@material-ui/core';
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 
 export const Carrito = (props) => {
     const { telefono, cartItems } = props;
