@@ -15,17 +15,11 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Navbar = (props) => {
+const Navbar = () => {
 
     //******************** 
     // Props
     //********************
-    
-    const {
-        setOpenRegistro,
-        setOpenLogin,
-        setIdUser
-      } = props;
 
     const classes = useStyles();
 
@@ -42,7 +36,7 @@ const Navbar = (props) => {
       setAnchorEl(null);
     };
 
-    const abrirModalRegistro = ()=>{
+    const irARegistro = ()=>{
         handleClose();
         history.push("/registro")
     }
@@ -52,13 +46,8 @@ const Navbar = (props) => {
         history.push("/login");
     }
 
-    const abrirModalLogin = ()=>{
-        setOpenLogin(true);
-        handleClose();
-    }
-
     const cerrarSesion = ()=>{
-        setIdUser(0)
+        localStorage.setItem("idUsuario", "0")
         handleClose()
         irAHome()
     }
@@ -94,7 +83,7 @@ const Navbar = (props) => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={abrirModalRegistro}>Registrar mi comercio</MenuItem>
+                                <MenuItem onClick={irARegistro}>Registrar mi comercio</MenuItem>
 
                                 {
                                     parseInt(localStorage.getItem("idUsuario")) === 0

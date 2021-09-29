@@ -7,11 +7,20 @@ import { useHistory, useLocation } from 'react-router'
 
 import { useComercioPresenter } from '../../presenter/comerciosPresenter'
 import { useLocalidadPresenter } from '../../presenter/localidadesPresenter';
+import { useComidaPresenter } from '../../presenter/comidasPresenter'
+import { DataGrid } from '@material-ui/data-grid';
+import TablaProductos from '../../components/TablaProductos';
 
+import { makeStyles } from '@material-ui/styles';
+import { Estilos } from '../../style/estilos';
+
+
+const useStyles = makeStyles((theme) => Estilos(theme));
 
 
 const GestionComercio = () => {
 
+    const classes = useStyles()
     
     //******************** 
     // Estados
@@ -20,10 +29,11 @@ const GestionComercio = () => {
     
     const { actualizarComercio, traerComercioPorIdDeUsuario } = useComercioPresenter();
     const { localidades, setLocalidades, traerLocalidades } = useLocalidadPresenter();
+    const {comidas, setComidas, traerComidasPorComercio} = useComidaPresenter();
     
     const [comercio, setComercio] = useState({})
     const [idUser, setIdUser] = useState(0);
-
+    const [productos, setProductos] = useState([])
     const [cargando, setCargando] = useState(true);
     
     //******************** 
@@ -37,6 +47,7 @@ const GestionComercio = () => {
     useEffect(() => {
         if(location.state){
             setIdUser(location.state.idUsuario);
+            localStorage.setItem("idUsuario", location.state.idUsuario)
        }
         
     }, [])
@@ -67,11 +78,18 @@ const GestionComercio = () => {
                 const locs = await traerLocalidades()
                 setLocalidades(locs)
 
+                const prods = await traerComidasPorComercio(com.idComercio);
+                setProductos(prods)
+
                 setCargando(false)
             } catch (error) {
                 console.error(error)
             }
         }
+    }
+
+    const openModalProd = ()=>{
+        alert("abrir modal nuevo prod")
     }
 
 
@@ -98,10 +116,14 @@ const GestionComercio = () => {
                     :
                     <>
 
-                        <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} />
+                            <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} />
+
+                            <TablaProductos productos={productos} openModalProd={openModalProd} />
                     </>
 
                 }
+
+                
                 </>
             }
         </>
