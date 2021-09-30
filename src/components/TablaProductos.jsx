@@ -1,17 +1,23 @@
 import { DataGrid } from '@material-ui/data-grid'
 import { Container, Box, Button, IconButton } from '@material-ui/core'
+import ModalProducto from './ModalProducto';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react'
+import React, {useState} from 'react'
 
 const TablaProductos = (props) => {
 
     const {
         productos,
-        openModalProd,
+        crearProducto,
         eliminarProductos
     } = props
 
+
+    const [open, setOpen] = useState(false);
+    const openModalProd = () => {
+        setOpen(true);
+    };
 
     const renderDetailsButton = (params) => {
         return (
@@ -33,7 +39,7 @@ const TablaProductos = (props) => {
                     color="primary"
                     style={{ marginLeft: 16 }}
                     onClick={() => {
-                        alert('No te olvides de agregar la dirección ;)')
+                        alert('Pending')
                     }}
                 >
                     <EditIcon />
@@ -63,7 +69,9 @@ const TablaProductos = (props) => {
                 autoHeight={true}
                 disableColumnMenu
             />
+            <ModalProducto open={open} setOpen={setOpen} accionProducto={crearProducto} productoContent={{}} />
         </Container>
+
     )
 }
 
