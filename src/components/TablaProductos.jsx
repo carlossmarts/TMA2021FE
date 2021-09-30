@@ -22,7 +22,7 @@ const TablaProductos = (props) => {
 
     useEffect(() => {
         console.log(JSON.stringify(producto) +
-                "UPDATEADO")
+            "UPDATEADO")
     }, [producto])
 
     const openModalProd = () => {
@@ -82,10 +82,14 @@ const TablaProductos = (props) => {
                 autoHeight={true}
                 disableColumnMenu
             />
-
             <ModalProducto esEdicion={false} open={open} setOpen={setOpen} crearProductos={crearProducto} producto={{}} />
-            <ModalProducto esEdicion={true} open={openEdicion} setOpen={setOpenEdicion} editarProductos={editarProductos} producto={producto} />
-
+            {productos.length != 0 ?
+                <>
+                    <ModalProducto esEdicion={true} open={openEdicion} setOpen={setOpenEdicion} editarProductos={editarProductos} producto={producto} />
+                </>
+                :
+                <></>
+            }
         </Container>
 
 
