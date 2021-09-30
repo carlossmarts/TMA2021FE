@@ -9,9 +9,16 @@ export const useComidaPresenter = () => {
         const res = await ComidasApi.traerComidasPorComercio(comercio);
         return res;
     }
+
+    const eliminarComidas = async (id) => {
+        const res = await ComidasApi.eliminarComidas(id);
+        return res;
+    }
+
     return {
         comidas, 
         setComidas,
         traerComidasPorComercio,
+        eliminarComidas
     }
 }

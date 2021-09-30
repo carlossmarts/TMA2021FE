@@ -29,7 +29,7 @@ const GestionComercio = () => {
     
     const { actualizarComercio, traerComercioPorIdDeUsuario } = useComercioPresenter();
     const { localidades, setLocalidades, traerLocalidades } = useLocalidadPresenter();
-    const {comidas, setComidas, traerComidasPorComercio} = useComidaPresenter();
+    const {comidas, setComidas, traerComidasPorComercio, eliminarComidas} = useComidaPresenter();
     
     const [comercio, setComercio] = useState({})
     const [idUser, setIdUser] = useState(0);
@@ -98,7 +98,7 @@ const GestionComercio = () => {
             {
                 !location.state
                 ?
-                <Grid  container spacing={1}  justify="center" alignItems="center" >
+                <Grid  container spacing={1}  justifyContent="center" alignItems="center" >
                     <Box display="flex" justifyContent="conter">
                         <Alert severity="warning">Aun no estas logueado!</Alert>
                     </Box>
@@ -118,7 +118,7 @@ const GestionComercio = () => {
 
                             <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} />
 
-                            <TablaProductos productos={productos} openModalProd={openModalProd} />
+                            <TablaProductos productos={productos} openModalProd={openModalProd} eliminarProductos={eliminarComidas} />
                     </>
 
                 }
