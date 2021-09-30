@@ -1,17 +1,34 @@
 import { DataGrid } from '@material-ui/data-grid'
 import { Container, Box, Button, IconButton } from '@material-ui/core'
+import ModalProducto from './ModalProducto';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const TablaProductos = (props) => {
 
     const {
         productos,
-        openModalProd,
-        eliminarProductos
+        crearProducto,
+        eliminarProductos,
+        editarProductos
     } = props
 
+
+    const [open, setOpen] = useState(false);
+    const [openEdicion, setOpenEdicion] = useState(false);
+    const [producto, setProducto] = useState(productos[0]);
+    const [esEdicion, setEsEdicion] = useState(false);
+
+    useEffect(() => {
+        console.log(JSON.stringify(producto) +
+                "UPDATEADO")
+    }, [producto])
+
+    const openModalProd = () => {
+        setEsEdicion(false)
+        setOpen(true);
+    };
 
     const renderDetailsButton = (params) => {
         return (
@@ -33,7 +50,9 @@ const TablaProductos = (props) => {
                     color="primary"
                     style={{ marginLeft: 16 }}
                     onClick={() => {
-                        alert('No te olvides de agregar la dirección ;)')
+                        setEsEdicion(true)
+                        setOpenEdicion(true);
+                        setProducto(params.row)
                     }}
                 >
                     <EditIcon />
@@ -63,7 +82,13 @@ const TablaProductos = (props) => {
                 autoHeight={true}
                 disableColumnMenu
             />
+
+            <ModalProducto esEdicion={false} open={open} setOpen={setOpen} crearProductos={crearProducto} producto={{}} />
+            <ModalProducto esEdicion={true} open={openEdicion} setOpen={setOpenEdicion} editarProductos={editarProductos} producto={producto} />
+
         </Container>
+
+
     )
 }
 
