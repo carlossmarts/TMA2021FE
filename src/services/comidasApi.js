@@ -30,4 +30,14 @@ export const ComidasApi = {
             console.error(err)
         }
     },
+
+    editarComidas: async (body) => {
+        try {
+            const res = await axios.put(`https://dry-thicket-39505.herokuapp.com/api/Producto/`, body);
+            const locs = await res.status;
+            return locs
+        } catch (err) {
+            console.error(err)
+        }
+    },
 }

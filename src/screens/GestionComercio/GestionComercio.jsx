@@ -30,7 +30,7 @@ const GestionComercio = () => {
 
     const { actualizarComercio, traerComercioPorIdDeUsuario } = useComercioPresenter();
     const { localidades, setLocalidades, traerLocalidades } = useLocalidadPresenter();
-    const { comidas, setComidas, traerComidasPorComercio, eliminarComidas, crearComidas } = useComidaPresenter();
+    const { comidas, setComidas, traerComidasPorComercio, eliminarComidas, crearComidas, editarComidas } = useComidaPresenter();
 
     const [comercio, setComercio] = useState({})
     const [idUser, setIdUser] = useState(0);
@@ -113,9 +113,8 @@ const GestionComercio = () => {
                                 </Grid>
                                 :
                                 <>
-
                                     <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} />
-                                    <TablaProductos productos={productos} crearProducto={crearComidas} eliminarProductos={eliminarComidas} />
+                                    <TablaProductos productos={productos} crearProducto={crearComidas} editarProductos={editarComidas} eliminarProductos={eliminarComidas} />
                                 </>
 
                         }

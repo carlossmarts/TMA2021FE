@@ -20,11 +20,17 @@ export const useComidaPresenter = () => {
         return res;
     }
 
+    const editarComidas = async (body, id) => {
+        const res = await ComidasApi.editarComidas(body, id);
+        return res;
+    }
+
     return {
         comidas, 
         setComidas,
         traerComidasPorComercio,
         crearComidas,
-        eliminarComidas
+        eliminarComidas,
+        editarComidas
     }
 }

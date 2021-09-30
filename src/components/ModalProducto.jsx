@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import Typography from '@material-ui/core/Typography'
@@ -13,8 +13,10 @@ const ModalProducto = (props) => {
   const {
     open,
     setOpen,
-    productoContent,
-    accionProducto
+    esEdicion,
+    producto,
+    crearProductos,
+    editarProductos
   } = props;
 
 
@@ -22,43 +24,38 @@ const ModalProducto = (props) => {
   // Estados
   //********************
 
-  const body = productoContent ? productoContent : {
-    "nombre": "",
-    "descripcion": "",
-    "foto": "",
-    "precio": 0,
-    "visible": true
-  }
+  useEffect(() => {
+    setProducto(producto)
+}, [producto])
 
-  const [producto, setProducto] = useReducer(
+  const [product, setProducto] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
-    body
+    producto
   );
 
   const handleInputChange = (event) => {
     console.log(event.target.name)
     if (event.target.name == "visible") {
       setProducto({
-        ...producto,
+        ...product,
         [event.target.name]: event.target.checked
       })
     } else if (event.target.name == "precio") {
       setProducto({
-        ...producto,
+        ...product,
         [event.target.name]: event.target.valueAsNumber
       })
     } else {
       setProducto({
-        ...producto,
+        ...product,
         [event.target.name]: event.target.value
       })
     }
   }
-  const handleSubmit = (event) => {
+
+  const crearProducto = (event) => {
     event.preventDefault();
-    console.log(JSON.stringify(producto) +
-      " BODY")
-    accionProducto(producto, localStorage.getItem("idTienda")).then((res) => {
+    crearProductos(product, localStorage.getItem("idTienda")).then((res) => {
       if (res === 201)
         alert("Producto Creado")
     }).then(() => {
@@ -66,6 +63,16 @@ const ModalProducto = (props) => {
     })
   }
 
+
+  const editarProducto = (event) => {
+    event.preventDefault();
+    editarProductos(product).then((res) => {
+      if (res === 204)
+        alert("Producto Actualizado")
+    }).then(() => {
+      window.location.reload()
+    })
+  }
 
   //******************** 
   // Effects
@@ -79,7 +86,6 @@ const ModalProducto = (props) => {
     setOpen(false);
   }
 
-
   return (
     <Dialog open={open} onClose={cerrar}>
       <Grid container justify="center">
@@ -87,15 +93,15 @@ const ModalProducto = (props) => {
           <Box p={1}>
             <Box mb={3}>
               <Typography variant="h6" gutterBottom>
-                {` Pedidos Ya - Crear nuevo producto`}
+                {"Pedidos Ya - Productos"}
               </Typography>
             </Box>
-            <form onSubmit={handleSubmit}>
+            <form>
               <Grid container spacing={3} style={{ width: '100%' }}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     label="Nombre"
-                    defaultValue={producto.nombre}
+                    defaultValue={product.nombre}
                     variant="outlined"
                     fullWidth
                     size="small"
@@ -106,7 +112,7 @@ const ModalProducto = (props) => {
                 <Grid item xs={12} sm={12}>
                   <TextField
                     label="Descripción"
-                    defaultValue={producto.descripcion}
+                    defaultValue={product.descripcion}
                     variant="outlined"
                     fullWidth
                     multiline
@@ -121,7 +127,7 @@ const ModalProducto = (props) => {
                     name="foto"
                     onChange={handleInputChange}
                     label="Link a la Foto"
-                    defaultValue={producto.foto}
+                    defaultValue={product.foto}
                     variant="outlined"
                     fullWidth
                     size="small"
@@ -133,7 +139,7 @@ const ModalProducto = (props) => {
                     name="precio"
                     onChange={handleInputChange}
                     label="Precio"
-                    defaultValue={producto.precio}
+                    defaultValue={product.precio}
                     variant="outlined"
                     fullWidth
                     size="small"
@@ -144,7 +150,7 @@ const ModalProducto = (props) => {
                     control={<Checkbox
                       name="visible"
                       onChange={handleInputChange}
-                      value={producto.visible}
+                      checked={product.visible}
                     />} label="Publicado"
                   />
                 </Grid>
@@ -154,9 +160,16 @@ const ModalProducto = (props) => {
         </Box>
       </Grid>
       <DialogActions style={{ display: "flex", justifyContent: "center" }} >
-        <Button onClick={handleSubmit} variant="contained" color="secondary">
-          Crear
-        </Button>
+        {
+          !esEdicion
+            ?
+            <Button onClick={crearProducto} variant="contained" color="secondary">
+              Crear
+            </Button>
+            :
+            <Button onClick={editarProducto} variant="contained" color="secondary">
+              Actualizar
+            </Button>}
         <Button onClick={cerrar} variant="outlined" color="secondary">
           Cancelar
         </Button>
@@ -164,5 +177,6 @@ const ModalProducto = (props) => {
     </Dialog>
   )
 }
+
 
 export default ModalProducto;
