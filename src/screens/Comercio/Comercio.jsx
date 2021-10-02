@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { Carrito } from '../../components/Carrito'
 import { ListaProductos } from '../../components/ListaProductos'
 import { LinearProgress, Grid, Box } from '@material-ui/core';
+import CardLocalDetallado from '../../components/CardLocalDetallado'
 
 const Comercio = () => {
 
@@ -59,14 +60,7 @@ const Comercio = () => {
 
     return (
         <div>
-            <Box px={5} m={2} display="flex" justifyContent="center">
-                <Typography variant="h4" color="initial" style={{ fontWeight: "bold" }}>
-                    {comercio ?
-                        comercio.nombre
-                        : "El comercio no existe"
-                    }
-                </Typography>
-            </Box>
+            <CardLocalDetallado comercio={comercio}/>
             <Grid container
                 direction="row"
                 justifyContent="center"
