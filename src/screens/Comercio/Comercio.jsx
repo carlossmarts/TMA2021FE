@@ -58,9 +58,35 @@ const Comercio = () => {
         }
     };
 
+    const onRemove = (product) => {
+        const exist = cartItems.find((x) => x.idProducto === product.idProducto);
+        if (exist) {
+            setCartItems(
+                cartItems.map((x) =>
+                    x.idProducto === product.idProducto ? { ...exist, qty: exist.qty - 1 } : x
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...product, qty: 1 }]);
+        }
+    };
+
+    const onDelete = (product) => {
+        const exist = cartItems.find((x) => x.idProducto === product.idProducto);
+        if (exist) {
+            setCartItems(
+                cartItems.filter((x) =>
+                    x.idProducto !== product.idProducto
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...product, qty: 1 }]);
+        }
+    };
+
     return (
         <div>
-            <CardLocalDetallado comercio={comercio}/>
+            <CardLocalDetallado comercio={comercio} />
             <Grid container
                 direction="row"
                 justifyContent="center"
@@ -76,6 +102,8 @@ const Comercio = () => {
                     telefono={comercio.telefono}
                     cartItems={cartItems}
                     onAdd={onAdd}
+                    onDelete={onDelete}
+                    onRemove={onRemove}
                 ></Carrito>
             </Grid>
         </div >
