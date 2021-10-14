@@ -1,8 +1,8 @@
-import { Grid, Paper, TextField, Button, Box } from '@material-ui/core';
+import { Grid, Paper, TextField, Button, Box, IconButton } from '@material-ui/core';
 import React, { useState, useEffect } from 'react'
 
 export const Carrito = (props) => {
-    const { telefono, cartItems } = props;
+    const { telefono, cartItems, onAdd, onDelete } = props;
     const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.precio, 0);
     const shippingPrice = 89
     const totalPrice = itemsPrice + shippingPrice;
@@ -14,7 +14,7 @@ export const Carrito = (props) => {
         let text =
             "Hola, vi tu menu en PedidosYa y quiero hacer el siguiente pedido: \n "
         cartItems.map((item) => (
-            text = text.concat(`${item.nombre} (${item.qty} x $${item.precio.toFixed(2)}) \n `)
+            text = text.concat(`${item.nombre} (${item.qty} x $${item.precio}) \n `)
         ))
         if (comentario !== "")
             text = text.concat(`*Comentarios:* ${comentario} \n`)
@@ -34,7 +34,9 @@ export const Carrito = (props) => {
                             <div key={item.idProducto} className="row">
                                 <div className="col-2">{item.name}</div>
                                 <div className="col-2 text-right">
-                                    {item.nombre} {item.qty} x ${item.precio.toFixed(2)}
+                                    {item.nombre} {item.qty} x ${item.precio}
+                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => onDelete(item)}>
+                                        x</IconButton>
                                 </div>
                             </div>
                         ))}

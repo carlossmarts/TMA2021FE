@@ -58,9 +58,22 @@ const Comercio = () => {
         }
     };
 
+    const onDelete = (product) => {
+        const exist = cartItems.find((x) => x.idProducto === product.idProducto);
+        if (exist) {
+            setCartItems(
+                cartItems.filter((x) =>
+                    x.idProducto !== product.idProducto
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...product, qty: 1 }]);
+        }
+    };
+
     return (
         <div>
-            <CardLocalDetallado comercio={comercio}/>
+            <CardLocalDetallado comercio={comercio} />
             <Grid container
                 direction="row"
                 justifyContent="center"
@@ -76,6 +89,7 @@ const Comercio = () => {
                     telefono={comercio.telefono}
                     cartItems={cartItems}
                     onAdd={onAdd}
+                    onDelete={onDelete}
                 ></Carrito>
             </Grid>
         </div >
