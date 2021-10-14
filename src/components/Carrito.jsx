@@ -2,7 +2,7 @@ import { Grid, Paper, TextField, Button, Box, IconButton } from '@material-ui/co
 import React, { useState, useEffect } from 'react'
 
 export const Carrito = (props) => {
-    const { telefono, cartItems, onAdd, onDelete } = props;
+    const { telefono, cartItems, onAdd, onDelete, onRemove } = props;
     const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.precio, 0);
     const shippingPrice = 89
     const totalPrice = itemsPrice + shippingPrice;
@@ -35,6 +35,10 @@ export const Carrito = (props) => {
                                 <div className="col-2">{item.name}</div>
                                 <div className="col-2 text-right">
                                     {item.nombre} {item.qty} x ${item.precio.toFixed(2)}
+                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => onAdd(item)}>
+                                        +
+                                    </IconButton>
+                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => item.qty === 1 ? onDelete(item) : onRemove(item)}>-</IconButton>
                                     <IconButton size="small" color="secondary" aria-label="" onClick={() => onDelete(item)}>
                                         x</IconButton>
                                 </div>

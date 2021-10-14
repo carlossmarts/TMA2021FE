@@ -58,6 +58,19 @@ const Comercio = () => {
         }
     };
 
+    const onRemove = (product) => {
+        const exist = cartItems.find((x) => x.idProducto === product.idProducto);
+        if (exist) {
+            setCartItems(
+                cartItems.map((x) =>
+                    x.idProducto === product.idProducto ? { ...exist, qty: exist.qty - 1 } : x
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...product, qty: 1 }]);
+        }
+    };
+
     const onDelete = (product) => {
         const exist = cartItems.find((x) => x.idProducto === product.idProducto);
         if (exist) {
@@ -90,6 +103,7 @@ const Comercio = () => {
                     cartItems={cartItems}
                     onAdd={onAdd}
                     onDelete={onDelete}
+                    onRemove={onRemove}
                 ></Carrito>
             </Grid>
         </div >
