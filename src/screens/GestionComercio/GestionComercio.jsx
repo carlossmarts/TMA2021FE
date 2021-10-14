@@ -8,6 +8,8 @@ import { useHistory, useLocation } from 'react-router'
 import { useComercioPresenter } from '../../presenter/comerciosPresenter'
 import { useLocalidadPresenter } from '../../presenter/localidadesPresenter';
 import { useComidaPresenter } from '../../presenter/comidasPresenter'
+import { useCategoriasPresenter } from '../../presenter/categoriasPresenter';
+
 import { DataGrid } from '@material-ui/data-grid';
 import TablaProductos from '../../components/TablaProductos';
 import ModalProducto from '../../components/ModalProducto';
@@ -31,6 +33,7 @@ const GestionComercio = () => {
     const { actualizarComercio, traerComercioPorIdDeUsuario } = useComercioPresenter();
     const { localidades, setLocalidades, traerLocalidades } = useLocalidadPresenter();
     const { comidas, setComidas, traerComidasPorComercio, eliminarComidas, crearComidas, editarComidas } = useComidaPresenter();
+    const { categorias, setCategorias, traerCategorias } = useCategoriasPresenter();
 
     const [comercio, setComercio] = useState({})
     const [idUser, setIdUser] = useState(0);
@@ -68,9 +71,6 @@ const GestionComercio = () => {
 
 
     const cargarData = async () => {
-
-
-
         console.log("GestionComercio - idUsuario recuperado", idUser)
         if (idUser !== 0) {
             try {
@@ -82,6 +82,9 @@ const GestionComercio = () => {
 
                 const prods = await traerComidasPorComercio(com.idComercio);
                 setProductos(prods)
+
+                const cats = await traerCategorias();
+                setCategorias(cats)
 
                 setCargando(false)
             } catch (error) {
@@ -113,7 +116,7 @@ const GestionComercio = () => {
                                 </Grid>
                                 :
                                 <>
-                                    <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} />
+                                    <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} categorias={categorias} />
                                     <TablaProductos productos={productos} crearProducto={crearComidas} editarProductos={editarComidas} eliminarProductos={eliminarComidas} />
                                 </>
 
