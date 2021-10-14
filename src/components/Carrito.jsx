@@ -14,7 +14,7 @@ export const Carrito = (props) => {
         let text =
             "Hola, vi tu menu en PedidosYa y quiero hacer el siguiente pedido: \n "
         cartItems.map((item) => (
-            text = text.concat(`${item.nombre} (${item.qty} x $${item.precio}) \n `)
+            text = text.concat(`${item.nombre} (${item.qty} x $${item.precio.toFixed(2)}) \n `)
         ))
         if (comentario !== "")
             text = text.concat(`*Comentarios:* ${comentario} \n`)
@@ -34,7 +34,7 @@ export const Carrito = (props) => {
                             <div key={item.idProducto} className="row">
                                 <div className="col-2">{item.name}</div>
                                 <div className="col-2 text-right">
-                                    {item.nombre} {item.qty} x ${item.precio}
+                                    {item.nombre} {item.qty} x ${item.precio.toFixed(2)}
                                     <IconButton size="small" color="secondary" aria-label="" onClick={() => onDelete(item)}>
                                         x</IconButton>
                                 </div>
