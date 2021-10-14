@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography';
 
 export const FormLocal = (props) => {
     const { localContent, actualizarComercio, categorias } = props;
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = React.useState([]);
+    const [categoriasLocal, setCategoriasLocal] = React.useState([]);
+
 
     const [local, setLocal] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
@@ -14,8 +15,9 @@ export const FormLocal = (props) => {
     );
 
     useEffect(() => {
-        local.categorias = categoriaSeleccionada;
-    }, [categoriaSeleccionada])
+        setCategoriasLocal(localContent.categorias)
+    }, [])
+
 
     const handleInputChange = (event) => {
         setLocal({
@@ -26,6 +28,7 @@ export const FormLocal = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        local.categorias = categoriasLocal
         actualizarComercio(local).then((data) => {
             console.log(JSON.stringify(data) +
                 "UPDATEADO")
@@ -33,15 +36,6 @@ export const FormLocal = (props) => {
         })
     }
 
-    const handleChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setCategoriaSeleccionada(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-        console.log("largo: " + categoriaSeleccionada.length)
-    };
 
     return (
         <Grid container justify="center">
@@ -110,22 +104,30 @@ export const FormLocal = (props) => {
                                         size="small"
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Select
-                                        name="categorias"
-                                        multiple
-                                        value={categoriaSeleccionada}
-                                        onChange={handleChange}
-                                    >
-                                        {categorias.map((categoria) => (
-                                            <MenuItem
-                                                key={categoria.nombre}
-                                                value={categoria}
-                                            >
-                                                {categoria.nombre}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+                                <Grid item xs={12}>
+                                    <Typography variant="h8" gutterBottom></Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant="h6" gutterBottom>Categorías del local: </Typography>
+                                </Grid>
+                                <Grid item xs={12} container
+                                    direction="row"
+                                    justifyContent="flex-start"
+                                    alignItems="center">
+
+                                    {categorias.map(categoria => {
+                                        return <Box>
+                                            {
+                                                (!categoriasLocal.filter(e => e.nombre === categoria.nombre).length > 0) ?
+
+                                                    <Button variant="text" cursor="pointer" onClick={() => setCategoriasLocal(categoriasLocal.concat(categoria))}>{categoria.nombre}</Button>
+                                                    :
+
+                                                    <Button variant="contained" cursor="pointer" onClick={() => setCategoriasLocal(categoriasLocal.filter(cat => cat.nombre !== categoria.nombre))}>{categoria.nombre}</Button>
+
+                                            }
+                                        </Box>
+                                    })}
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <Button type="submit" variant="contained" color="primary">
