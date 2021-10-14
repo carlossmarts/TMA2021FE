@@ -15,6 +15,11 @@ export const useComercioPresenter = () => {
         return res;
     }
 
+    const traerComerciosPorLocalidadYProducto = async (localidad, producto) => {
+        const res = await ComerciosApi.traerComerciosPorLocalidadYProducto(localidad, producto);
+        return res;
+    }
+
     const traerComercioPorId = async (id) =>{
         const res = await ComerciosApi.traerComercioPorId(id);
         return res;
@@ -38,7 +43,7 @@ export const useComercioPresenter = () => {
     return {
         comercios, setComercios,
         traerComerciosPorLocalidad, traerComercioPorIdDeUsuario,
-        traerComerciosPorLocalidadYCategoria,
+        traerComerciosPorLocalidadYCategoria, traerComerciosPorLocalidadYProducto,
         traerComercioPorId, actualizarComercio, altaComercioYUsuario
     }
 }

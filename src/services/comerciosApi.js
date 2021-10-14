@@ -21,6 +21,18 @@ export const ComerciosApi = {
         }
     },
 
+    traerComerciosPorLocalidadYProducto: async (localidad, producto) => {
+        producto = producto.replace(/ /g, '%20')
+        try {
+            const res = await axios.get(`https://dry-thicket-39505.herokuapp.com/api/Comercio/buscarXProducto/${producto}?localidad=${localidad}`);
+            const locs = await res.data;
+            return locs
+        } catch (err) {
+            console.error(err)
+        }
+    },
+
+
     traerComercioPorId: async (id) => {
         try {
             const res = await axios.get(`https://dry-thicket-39505.herokuapp.com/api/Comercio/${id}`);

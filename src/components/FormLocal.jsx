@@ -1,15 +1,21 @@
-import React, { useReducer } from 'react'
-import { TextField, Grid, Box, Button } from '@material-ui/core';
+import React, { useReducer, useEffect } from 'react'
+import { TextField, Grid, Box, Button, Select, MenuItem, OutlinedInput } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 
 export const FormLocal = (props) => {
-    const { localContent, actualizarComercio } = props;
+    const { localContent, actualizarComercio, categorias } = props;
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = React.useState([]);
+
     const [local, setLocal] = useReducer(
         (state, newState) => ({ ...state, ...newState }),
         localContent
     );
+
+    useEffect(() => {
+        local.categorias = categoriaSeleccionada;
+    }, [categoriaSeleccionada])
 
     const handleInputChange = (event) => {
         setLocal({
@@ -17,7 +23,7 @@ export const FormLocal = (props) => {
             [event.target.name]: event.target.value
         })
     }
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
         actualizarComercio(local).then((data) => {
@@ -26,6 +32,16 @@ export const FormLocal = (props) => {
             alert("Usuario actualizado")
         })
     }
+
+    const handleChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setCategoriaSeleccionada(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        console.log("largo: " + categoriaSeleccionada.length)
+    };
 
     return (
         <Grid container justify="center">
@@ -93,6 +109,23 @@ export const FormLocal = (props) => {
                                         fullWidth
                                         size="small"
                                     />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Select
+                                        name="categorias"
+                                        multiple
+                                        value={categoriaSeleccionada}
+                                        onChange={handleChange}
+                                    >
+                                        {categorias.map((categoria) => (
+                                            <MenuItem
+                                                key={categoria.nombre}
+                                                value={categoria}
+                                            >
+                                                {categoria.nombre}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <Button type="submit" variant="contained" color="primary">
