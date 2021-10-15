@@ -1,6 +1,8 @@
 import { Grid, Paper, TextField, Button, Box, IconButton } from '@material-ui/core';
 import React, { useState, useEffect } from 'react'
-
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 export const Carrito = (props) => {
     const { telefono, cartItems, onAdd, onDelete, onRemove } = props;
     const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.precio, 0);
@@ -34,13 +36,14 @@ export const Carrito = (props) => {
                             <div key={item.idProducto} className="row">
                                 <div className="col-2">{item.name}</div>
                                 <div className="col-2 text-right">
-                                    {item.nombre} {item.qty} x ${item.precio.toFixed(2)}
-                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => onAdd(item)}>
-                                        +
-                                    </IconButton>
-                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => item.qty === 1 ? onDelete(item) : onRemove(item)}>-</IconButton>
                                     <IconButton size="small" color="secondary" aria-label="" onClick={() => onDelete(item)}>
-                                        x</IconButton>
+                                        <HighlightOffIcon /></IconButton>
+                                    {item.nombre} ${item.precio.toFixed(2)}
+                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => onAdd(item)}>
+                                        <AddCircleOutlineIcon />
+                                    </IconButton>
+                                    {item.qty}
+                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => item.qty === 1 ? onDelete(item) : onRemove(item)}><RemoveCircleOutlineIcon /></IconButton>
                                 </div>
                             </div>
                         ))}
