@@ -1,4 +1,4 @@
-import { Grid, Paper, TextField, Button, Box, IconButton } from '@material-ui/core';
+import { Grid, Paper, TextField, Button, Box, IconButton, ButtonGroup } from '@material-ui/core';
 import React, { useState, useEffect } from 'react'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
@@ -33,17 +33,20 @@ export const Carrito = (props) => {
                     <div>
                         {cartItems.length === 0 && <div>Tu pedido está vacío</div>}
                         {cartItems.map((item) => (
-                            <div key={item.idProducto} className="row">
+                            <div key={item.idProducto} className="row" style={{ "padding-bottom": "10px" }}>
                                 <div className="col-2">{item.name}</div>
-                                <div className="col-2 text-right">
+                                <div className="col-2 text-right" style={{ "display": "flex" }}>
                                     <IconButton size="small" color="secondary" aria-label="" onClick={() => onDelete(item)}>
                                         <HighlightOffIcon /></IconButton>
-                                    {item.nombre} ${item.precio.toFixed(2)}
-                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => onAdd(item)}>
-                                        <AddCircleOutlineIcon />
-                                    </IconButton>
-                                    {item.qty}
-                                    <IconButton size="small" color="secondary" aria-label="" onClick={() => item.qty === 1 ? onDelete(item) : onRemove(item)}><RemoveCircleOutlineIcon /></IconButton>
+                                    <div style={{ "align-items": "center", "display": "flex", "padding-right": "10px" }}>{item.nombre} ${item.precio.toFixed(2)}</div>
+                                    <ButtonGroup size="small" aria-label="small outlined button group">
+                                        <Button><IconButton size="small" color="secondary" aria-label="" onClick={() => onAdd(item)}>
+                                            <AddCircleOutlineIcon />
+                                        </IconButton></Button>
+                                        <Button>{item.qty}</Button>
+                                        <Button><IconButton size="small" color="secondary" aria-label="" onClick={() => item.qty === 1 ? onDelete(item) : onRemove(item)}><RemoveCircleOutlineIcon /></IconButton>
+                                        </Button>
+                                    </ButtonGroup>
                                 </div>
                             </div>
                         ))}
