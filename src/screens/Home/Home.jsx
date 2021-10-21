@@ -1,6 +1,8 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 import FiltroLocales from '../FiltroLocales/FiltroLocales';
+import { BuscarPedido } from '../../components/BuscarPedido'
+
 
 
 const Home = () => {
@@ -11,7 +13,8 @@ const Home = () => {
 
   return (
     <>
-    <FiltroLocales />
+      <BuscarPedido />
+      <FiltroLocales />
     </>
   );
 }
