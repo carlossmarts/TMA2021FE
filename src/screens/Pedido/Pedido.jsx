@@ -35,6 +35,7 @@ const Pedido = () => {
     useEffect(() => {
         traerComercioPorId(id).then(data => setComercio(data)).catch(err => console.error(err))
     }, [])
+    //console.log(comercio);
 
     // useEffect(() => {
     //     if (id !== 8) {
