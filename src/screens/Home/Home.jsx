@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import FiltroLocales from '../FiltroLocales/FiltroLocales';
+import { BuscarPedido } from '../../components/BuscarPedido'
+
 
 
 const Home = () => {
+
+  useEffect(() => {
+    localStorage.setItem("idUsuario", "0")
+  }, [])
+
   return (
     <>
-    <FiltroLocales />
+      <BuscarPedido />
+      <FiltroLocales />
     </>
   );
 }
