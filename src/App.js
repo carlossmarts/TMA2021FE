@@ -13,25 +13,30 @@ import Registro from './screens/Registro'
 const App = () => {
 
   const [openBuscarPedido, setOpenBuscarPedido] = useState(false)
+  const [url, setUrl] = useState(window.location.href)
 
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/">
         <Navbar
           setOpenBuscarPedido={setOpenBuscarPedido}
+          url={url}
         />
         <Switch>
           <Route exact path={'/'}>
             <Home 
               openBuscarPedido={openBuscarPedido}
               setOpenBuscarPedido={setOpenBuscarPedido}
+              setUrl={setUrl}
             />
           </Route>
           <Route exact path={'/comercio/:id'}>
             <Comercio />
           </Route>
           <Route exact path={'/pedido/:id'}>
-            <Pedido />
+            <Pedido 
+              setUrl={setUrl}
+            />
           </Route>
           <Route exact path={'/gestion'}>
             <GestionComercio />

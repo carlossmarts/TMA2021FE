@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = (props) => {
 
-    const {setOpenBuscarPedido} = props
+    const {setOpenBuscarPedido, url} = props
 
     const classes = useStyles();
 
@@ -55,6 +55,8 @@ const Navbar = (props) => {
           pathname:"/"
         })
       }
+
+    
       
     return (
         <div>
@@ -83,9 +85,16 @@ const Navbar = (props) => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={()=> {setOpenBuscarPedido(true); handleClose()}} > Buscar pedidos </MenuItem>
+                                {
+                                    url.includes("pedido")?
+                                        null
+                                    :
+                                        <>
+                                            <MenuItem onClick={()=> {setOpenBuscarPedido(true); handleClose()}} > Buscar pedidos </MenuItem>
+                                            <Divider/>
+                                        </>
+                                }
                                 
-                                <Divider/>
 
                                 <MenuItem onClick={irARegistro}>Registrar mi comercio</MenuItem>
 

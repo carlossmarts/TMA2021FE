@@ -6,8 +6,11 @@ import CardPedido from '../../components/CardPedido'
 import { LinearProgress, Grid, Box } from '@material-ui/core';
 import CardLocalDetallado from '../../components/CardLocalDetallado'
 import { useComercioPresenter } from '../../presenter/comerciosPresenter'
+import { SettingsRemoteOutlined } from '@material-ui/icons'
 
-const Pedido = () => {
+const Pedido = (props) => {
+
+    const {setUrl} = props
 
     //Hooks
     const { id } = useParams()
@@ -34,6 +37,7 @@ const Pedido = () => {
 
     useEffect(() => {
         traerComercioPorId(id).then(data => setComercio(data)).catch(err => console.error(err))
+        setUrl(window.location.href)
     }, [])
     //console.log(comercio);
 

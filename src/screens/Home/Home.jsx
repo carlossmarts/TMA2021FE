@@ -8,8 +8,9 @@ import {Grid} from '@material-ui/core'
 
 const Home = (props) => {
 
-  const {openBuscarPedido, setOpenBuscarPedido} = props
+  const {openBuscarPedido, setOpenBuscarPedido, setUrl} = props
   useEffect(() => {
+    setUrl(window.location.href)
     localStorage.setItem("idUsuario", "0")
   }, [])
 
