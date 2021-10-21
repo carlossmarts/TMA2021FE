@@ -9,9 +9,15 @@ export const usePedidosPresenter = ()=>{
         const res = await PedidosApi.traerPedidosPorId(id);
         return res;
     }
+
+    const crearPedido = async(body) =>{
+        const res = await PedidosApi.crearPedido(body);
+        return res;
+    }
     
     return {
         pedidos,
+        crearPedido,
         setPedidos,
         traerPedidoPorId
     }
