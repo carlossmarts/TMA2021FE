@@ -14,8 +14,8 @@ export const Carrito = (props) => {
     const [detalle, setDetalle] = useState('');
     const [idPedido, setIdPedido] = useState('');
     const [mensaje, setMensaje] = useState('');
+    const [url, setUrl] = useState('')
     const [pedidoRealizado, setPedidoRealizado] = useState(false);
-
 
     useEffect(() => {
         let text =
@@ -31,6 +31,11 @@ export const Carrito = (props) => {
         setMensaje(`https://wa.me/549${telefono}?text=${encodeURI(text)}`)
     }, [cartItems, direccion, comentario])
 
+    useEffect(() => {
+        let hostAddress = window.location.host;
+        let url = window.location.protocol + "//" + hostAddress + "/pedido/" + idPedido;
+        setUrl(url)
+    }, [idPedido])
 
     const guardarPedido = (event) => {
         event.preventDefault();
@@ -45,17 +50,10 @@ export const Carrito = (props) => {
         console.log("QUIERO PEDIR: " + JSON.stringify(pedido))
         crearPedido(pedido).then((res) => {
             if (res.status === 201) {
-                console.log(JSON.stringify(res))
                 setPedidoRealizado(true)
-                setIdPedido(res.data.idPedido)
+                setIdPedido(res.data)
             }
         })
-    }
-
-    function goToUrl() {
-        let hostAddress = window.location.host;
-        let url = hostAddress + "/pedido/" + idPedido;
-        console.log(url)
     }
 
     return (
@@ -153,7 +151,7 @@ export const Carrito = (props) => {
                         </> :
                         <>
                             <h2 style={{ 'text-align': 'center' }}>Realizaste tu pedido!</h2>
-                            <Button onClick={goToUrl()}>Mirá el estado de tu pedido acá</Button>
+                            <Button onClick={(e) => {window.open(url, "_blank")}}>Mirá el estado de tu pedido acá</Button>
                         </>}
                 </Box>
             </Paper >
