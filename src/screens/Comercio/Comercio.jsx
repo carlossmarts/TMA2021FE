@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useComercioPresenter } from '../../presenter/comerciosPresenter'
 import { useComidaPresenter } from '../../presenter/comidasPresenter'
+import { usePedidosPresenter } from '../../presenter/pedidosPresenter'
+
 import Typography from '@material-ui/core/Typography'
 import { Carrito } from '../../components/Carrito'
 import { ListaProductos } from '../../components/ListaProductos'
@@ -13,6 +15,7 @@ const Comercio = () => {
     //Hooks
     const { id } = useParams()
     const { traerComercioPorId } = useComercioPresenter()
+    const { crearPedido } = usePedidosPresenter();
     const { comidas, setComidas, traerComidasPorComercio } = useComidaPresenter();
 
     //Estados
@@ -101,9 +104,11 @@ const Comercio = () => {
                 <Carrito
                     telefono={comercio.telefono}
                     cartItems={cartItems}
+                    idComercio = {id}
                     onAdd={onAdd}
                     onDelete={onDelete}
                     onRemove={onRemove}
+                    crearPedido={crearPedido}
                 ></Carrito>
             </Grid>
         </div >
