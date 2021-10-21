@@ -15,11 +15,9 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Navbar = () => {
+const Navbar = (props) => {
 
-    //******************** 
-    // Props
-    //********************
+    const {setOpenBuscarPedido} = props
 
     const classes = useStyles();
 
@@ -64,7 +62,9 @@ const Navbar = () => {
                 <Toolbar>
                     <Grid container spacing={1} alignItems="center">
                         <Grid item container xs={6} justifyContent="flex-start">
-                            <Typography variant="h6" > PedidosYa</Typography>
+                            <IconButton aria-label="" onClick={irAHome}>
+                                <Typography variant="h6" style={{color:"#fff"}} > PedidosYa</Typography>
+                            </IconButton>
                         </Grid>
                         <Grid item container xs={6} justifyContent="flex-end" spacing={4}>
 
@@ -83,6 +83,10 @@ const Navbar = () => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
+                                <MenuItem onClick={()=> {setOpenBuscarPedido(true); handleClose()}} > Buscar pedidos </MenuItem>
+                                
+                                <Divider/>
+
                                 <MenuItem onClick={irARegistro}>Registrar mi comercio</MenuItem>
 
                                 {
@@ -94,6 +98,7 @@ const Navbar = () => {
                                 }
 
                                 <Divider/>
+
                                 <MenuItem onClick={handleClose}>cerrar</MenuItem>
 
 

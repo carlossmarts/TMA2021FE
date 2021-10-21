@@ -11,13 +11,21 @@ import Login from './screens/Login'
 import Registro from './screens/Registro'
 
 const App = () => {
+
+  const [openBuscarPedido, setOpenBuscarPedido] = useState(false)
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/">
-        <Navbar />
+        <Navbar
+          setOpenBuscarPedido={setOpenBuscarPedido}
+        />
         <Switch>
           <Route exact path={'/'}>
-            <Home />
+            <Home 
+              openBuscarPedido={openBuscarPedido}
+              setOpenBuscarPedido={setOpenBuscarPedido}
+            />
           </Route>
           <Route exact path={'/comercio/:id'}>
             <Comercio />
