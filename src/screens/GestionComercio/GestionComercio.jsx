@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { FormLocal } from '../../components/FormLocal';
-import { TextField, Grid, LinearProgress, Button, Typography, Box, Paper, IconButton} from '@material-ui/core';
+import { TextField, Grid, LinearProgress, Button, Typography, Box, Paper, IconButton, Divider} from '@material-ui/core';
 import { Alert } from '@material-ui/lab'
 import {Cancel} from '@material-ui/icons'
 
@@ -104,7 +104,7 @@ const GestionComercio = () => {
             <Grid container>
 
                 {/* INFO Y PRODUCTOS */}
-                <Grid item container sm={8} xs={12}>
+                <Grid item container md={8} xs={12}>
                     {
                         !location.state
                             ?
@@ -135,7 +135,7 @@ const GestionComercio = () => {
                 </Grid>
 
 
-                <Grid item container sm={4} xs={12}>
+                <Grid item container md={4} xs={12}>
                     {/* Pedidos */}
                     <Box height="100%" width="95%" mt={5}>
                         {
@@ -183,35 +183,50 @@ const Pedido = ({pedido})=>{
     return(
         <>
             <Box m={1}>
-                <Paper>
+                <Paper >
                     <Box p={2}>
-                        <Grid item container xs={12} justifyContent="flex-end">
+                        <Grid item container xs={12} justifyContent="space-between" alignItems="center">
+                            <Typography variant="body2" color="initial">{`ID: ${pedido.idPedido}`}</Typography>
                             <IconButton onClick={()=>{alert("pedido resuelto")}}>
                                 <Cancel fontSize="small"/>
                             </IconButton>
                         </Grid>
-                        <Grid item container spacing={1}>
-                            <Grid item xs={12}>
-                                <Typography variant="body2" color="initial">{`ID: ${pedido.idPedido}`}</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography variant="body2" color="initial">Direccion</Typography>
-                                <Typography variant="caption" color="initial">{pedido.direccion}`</Typography>
-                                <Box m={1}/>
-                                <Typography variant="body2" color="initial">Items:</Typography>
-                                {
-                                    items.map(item =>{
-                                        return (<Typography variant ="caption">{`* ${item}`}</Typography>)
-                                    })
-                                }
-                                
-                                <Box m={1}/>
-                                <Typography variant="body2" color="initial">Comentarios:</Typography>
-                                <Typography variant="caption" color="initial">{comentario}</Typography>
-                                <Box m={1}/>
-                                <Typography variant="body2" color="initial">Precio:</Typography>
-                                <Typography variant="caption" color="initial">{precio}</Typography>
+                        <Divider />
+                        <Grid item container spacing={1} >
+                            <Grid item container xs={12} alignItems="center">
+                                <Grid item xs={4}>
+                                    <Typography variant="body2" color="initial">Direccion</Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography variant="caption" color="initial">{pedido.direccion}</Typography>
+                                </Grid>
 
+                                <Grid item container xs={12} alignItems="flex-start">
+                                    <Grid item xs={4}>
+                                        <Typography variant="body2" color="initial">Items:</Typography>
+                                    </Grid>
+                                    <Grid item xs={8} >
+                                        {
+                                            items.map(item =>{
+                                                return (<Typography variant ="caption">{`* ${item}`}</Typography>)
+                                            })
+                                        }
+                                    </Grid>
+                                </Grid>    
+
+                                <Grid item xs={4}>
+                                    <Typography variant="body2" color="initial">Comentarios:</Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography variant="caption" color="initial">{comentario}</Typography>
+                                </Grid>
+        
+                                <Grid item xs={4}>
+                                    <Typography variant="body2" color="initial">Precio:</Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography variant="caption" color="initial">{precio}</Typography>
+                                </Grid>
                             </Grid>                            
                         </Grid>
                     </Box>
