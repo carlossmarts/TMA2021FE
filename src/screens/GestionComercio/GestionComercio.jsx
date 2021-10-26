@@ -158,7 +158,6 @@ export default GestionComercio;
 const Pedido = ({pedido})=>{
 
     const [items, setItems] = useState([])
-    const [comentario, setComentario] = useState("")
     const [precio, setPrecio] = useState("")
 
     useEffect(() => {
@@ -170,11 +169,9 @@ const Pedido = ({pedido})=>{
         
         console.log(pedido)
         const strSplit = pedido.descripcion.split("\n")
-        const items = strSplit.slice(1, strSplit.length -2) 
-        const comentario = strSplit[strSplit.length-2]
+        const items = strSplit.slice(1, strSplit.length -2)
         const precio = strSplit[strSplit.length-1]
         setItems(items)
-        setComentario(comentario? comentario.replace("*Comentarios:*", "").replace("\\n", "").replace("\\r","") : "")
         setPrecio(precio? precio.replace ("*Total:*", "").replace("\\n", "").replace("\\r",""): "")
     }, [])
 
@@ -222,7 +219,7 @@ const Pedido = ({pedido})=>{
                                     <Typography variant="body2" color="initial">Comentarios:</Typography>
                                 </Grid>
                                 <Grid item xs={8}>
-                                    <Typography variant="caption" color="initial">{comentario}</Typography>
+                                    <Typography variant="caption" color="initial">{pedido.comentarios}</Typography>
                                 </Grid>
         
                                 <Grid item xs={4}>
