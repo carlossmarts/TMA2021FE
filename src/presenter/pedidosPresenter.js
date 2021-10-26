@@ -9,6 +9,13 @@ export const usePedidosPresenter = ()=>{
         const res = await PedidosApi.traerPedidosPorId(id);
         return res;
     }
+    
+    const traerPedidosPorIdComercio = async(id) =>{
+        const res = await PedidosApi.traerPedidosPorIdComercio(id);
+        return res;
+    }
+
+
 
     const crearPedido = async(body) =>{
         const res = await PedidosApi.crearPedido(body);
@@ -25,6 +32,7 @@ export const usePedidosPresenter = ()=>{
         crearPedido,
         setPedidos,
         traerPedidoPorId,
-        updatePedido
+        updatePedido,
+        traerPedidosPorIdComercio
     }
 }

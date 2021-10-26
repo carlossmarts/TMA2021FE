@@ -22,6 +22,16 @@ export const PedidosApi = {
         }
     },
 
+    traerPedidosPorIdComercio: async (id) => {
+        try {
+            const res = await axios.get(`https://dry-thicket-39505.herokuapp.com/api/Pedido/PedidosXComercio/${id}`);
+            const locs = await res.data;
+            return locs
+        } catch (err) {
+            console.error(err)
+        }
+    },
+
     updatePedido: async (estado, body) => {
         try {
             const res = await axios.put(`https://dry-thicket-39505.herokuapp.com/api/Pedido/?estado=${estado}`, body);
