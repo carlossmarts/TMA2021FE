@@ -174,8 +174,8 @@ const Pedido = ({pedido})=>{
         const comentario = strSplit[strSplit.length-2]
         const precio = strSplit[strSplit.length-1]
         setItems(items)
-        setComentario(comentario? comentario.replace("*Comentarios:*", "").replace("\n", "").replace("\r","") : "")
-        setPrecio(precio? precio.replace ("*Total:*", "").replace("\n", "").replace("\r",""): "")
+        setComentario(comentario? comentario.replace("*Comentarios:*", "").replace("\\n", "").replace("\\r","") : "")
+        setPrecio(precio? precio.replace ("*Total:*", "").replace("\\n", "").replace("\\r",""): "")
     }, [])
 
 
@@ -208,7 +208,11 @@ const Pedido = ({pedido})=>{
                                     <Grid item xs={8} >
                                         {
                                             items.map(item =>{
-                                                return (<Typography variant ="caption">{`* ${item}`}</Typography>)
+                                                return (
+                                                    <Grid item xs={12}>
+                                                        <Typography variant ="caption">{`* ${item.replace("\\n", "")}`}</Typography>
+                                                    </Grid>
+                                                )
                                             })
                                         }
                                     </Grid>
