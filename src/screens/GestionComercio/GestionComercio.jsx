@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { FormLocal } from '../../components/FormLocal';
-import { TextField, Grid, LinearProgress, Button, Typography, Box, Paper, IconButton, Divider} from '@material-ui/core';
-import { Alert } from '@material-ui/lab'
-import {Cancel} from '@material-ui/icons'
+import { TextField, Grid, LinearProgress, Button, MenuItem, Typography, Box, Paper, IconButton, Divider, FormControl, InputLabel, Select } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { Cancel } from '@material-ui/icons'
 
 import { useHistory, useLocation } from 'react-router'
 
@@ -36,7 +36,7 @@ const GestionComercio = () => {
     const { localidades, setLocalidades, traerLocalidades } = useLocalidadPresenter();
     const { comidas, setComidas, traerComidasPorComercio, eliminarComidas, crearComidas, editarComidas } = useComidaPresenter();
     const { categorias, setCategorias, traerCategorias } = useCategoriasPresenter();
-    const { pedidos, setPedidos, traerPedidosPorIdComercio } = usePedidosPresenter();
+    const { pedidos, setPedidos, traerPedidosPorIdComercio, updatePedido } = usePedidosPresenter();
 
     const [comercio, setComercio] = useState({})
     const [idUser, setIdUser] = useState(0);
@@ -102,7 +102,6 @@ const GestionComercio = () => {
     return (
         <>
             <Grid container>
-
                 {/* INFO Y PRODUCTOS */}
                 <Grid item container md={8} xs={12}>
                     {
@@ -124,11 +123,18 @@ const GestionComercio = () => {
                                             <LinearProgress />
                                         </Grid>
                                         :
-                                        <Grid item container direction="column" justifyContent="flex-start"> 
-                                            <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} categorias={categorias} />
-                                            <TablaProductos productos={productos} crearProducto={crearComidas} editarProductos={editarComidas} eliminarProductos={eliminarComidas} />
+                                        <Grid item container direction="column" justifyContent="flex-start" spacing={0}>
+                                            <Grid item container
+                                                direction="column"
+                                                alignItems="center" >
+                                                <FormLocal actualizarComercio={actualizarComercio} localContent={comercio} categorias={categorias} />
+                                            </Grid>
+                                            <Grid item container
+                                                direction="column"
+                                                alignItems="center" >
+                                                <TablaProductos productos={productos} crearProducto={crearComidas} editarProductos={editarComidas} eliminarProductos={eliminarComidas} />
+                                            </Grid>
                                         </Grid>
-
                                 }
                             </>
                     }
@@ -137,28 +143,32 @@ const GestionComercio = () => {
 
                 <Grid item container md={4} xs={12}>
                     {/* Pedidos */}
-                    <Box height="100%" width="95%" mt={5}>
+                    <Box height="100%" width="95%" mt={3}>
                         {
                             pedidos.map(p => {
-                                return <Pedido key={p.idPedido} pedido={p}/>
+                                return <Pedido key={p.idPedido} pedido={p} updatePedido={updatePedido} />
                             })
                         }
                     </Box>
                 </Grid>
-
             </Grid>
-
-
         </>
     )
 }
 
 export default GestionComercio;
 
-const Pedido = ({pedido})=>{
+const Pedido = (props) => {
+    const { pedido, updatePedido } = props;
+    const classes = useStyles()
 
-    const [items, setItems] = useState([])
-    const [precio, setPrecio] = useState("")
+    const [items, setItems] = useState([]);
+    const [precio, setPrecio] = useState("");
+    const [estado, setEstado] = useState(pedido.estado);
+
+
+
+    const estados = ['cancelado', 'pendiente', 'en proceso', 'enviado', 'entregado'];
 
     useEffect(() => {
         /*str = Hola, vi tu menu en PedidosYa y quiero hacer el siguiente pedido: 
@@ -166,27 +176,55 @@ const Pedido = ({pedido})=>{
                 Mega Deluxe Not Burger (1 x $555.00) 
                 *Total:* $845.*/
 
-        
+
         console.log(pedido)
         const strSplit = pedido.descripcion.split("\n")
-        const items = strSplit.slice(1, strSplit.length -2)
-        const precio = strSplit[strSplit.length-1]
+        const items = strSplit.slice(1, strSplit.length - 2)
+        const precio = strSplit[strSplit.length - 1]
         setItems(items)
-        setPrecio(precio? precio.replace ("*Total:*", "").replace("\\n", "").replace("\\r",""): "")
+        setPrecio(precio ? precio.replace("*Total:*", "").replace("\\n", "").replace("\\r", "") : "")
     }, [])
 
+    const handleChange = (event) => {
+        console.log('Estado: ' + event.target.value)
+        setEstado(event.target.value);
+    };
 
+    useEffect(() => {
+        if (estado != pedido.estado) {
+            pedido.estado = estado;
+            updatePedido(estado, pedido);
+        }
+    }, [estado])
 
-    return(
+    return (
         <>
             <Box m={1}>
                 <Paper >
                     <Box p={2}>
                         <Grid item container xs={12} justifyContent="space-between" alignItems="center">
                             <Typography variant="body2" color="initial">{`ID: ${pedido.idPedido}`}</Typography>
-                            <IconButton onClick={()=>{alert("pedido resuelto")}}>
+                            {/* <IconButton onClick={()=>{alert("pedido resuelto")}}>
                                 <Cancel fontSize="small"/>
-                            </IconButton>
+                            </IconButton> */}
+                            <FormControl sx={{ minWidth: 120 }} size="small">
+                                <TextField
+                                    select
+                                    variant="outlined"
+                                    size='small'
+                                    SelectProps={{ value: estado, onChange: handleChange }}
+                                    InputProps={{
+                                        classes: { notchedOutline: classes.noBorder }
+                                    }}
+                                >
+                                    {estados.map((estado) => (
+                                        <MenuItem key={estado} value={estado}>
+                                            {estado[0].toUpperCase() + estado.slice(1)}
+                                        </MenuItem>
+                                    ))}
+
+                                </TextField>
+                            </FormControl>
                         </Grid>
                         <Divider />
                         <Grid item container spacing={1} >
@@ -204,16 +242,16 @@ const Pedido = ({pedido})=>{
                                     </Grid>
                                     <Grid item xs={8} >
                                         {
-                                            items.map(item =>{
+                                            items.map(item => {
                                                 return (
                                                     <Grid item xs={12}>
-                                                        <Typography variant ="caption">{`* ${item.replace("\\n", "")}`}</Typography>
+                                                        <Typography variant="caption">{`* ${item.replace("\\n", "")}`}</Typography>
                                                     </Grid>
                                                 )
                                             })
                                         }
                                     </Grid>
-                                </Grid>    
+                                </Grid>
 
                                 <Grid item xs={4}>
                                     <Typography variant="body2" color="initial">Comentarios:</Typography>
@@ -221,17 +259,17 @@ const Pedido = ({pedido})=>{
                                 <Grid item xs={8}>
                                     <Typography variant="caption" color="initial">{pedido.comentarios}</Typography>
                                 </Grid>
-        
+
                                 <Grid item xs={4}>
                                     <Typography variant="body2" color="initial">Precio:</Typography>
                                 </Grid>
                                 <Grid item xs={8}>
                                     <Typography variant="caption" color="initial">{precio}</Typography>
                                 </Grid>
-                            </Grid>                            
+                            </Grid>
                         </Grid>
                     </Box>
-                </Paper> 
+                </Paper>
             </Box>
         </>
     )

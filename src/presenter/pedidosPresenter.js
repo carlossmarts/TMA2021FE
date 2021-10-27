@@ -15,8 +15,6 @@ export const usePedidosPresenter = ()=>{
         return res;
     }
 
-
-
     const crearPedido = async(body) =>{
         const res = await PedidosApi.crearPedido(body);
         return res;

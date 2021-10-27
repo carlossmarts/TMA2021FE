@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { Button, Box, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Paper, Typography, } from '@material-ui/core';
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CardPedido = (props)=> {
+const CardPedido = (props) => {
 
   const { pedido, setPedido, local } = props;
 
@@ -44,8 +44,8 @@ const CardPedido = (props)=> {
 
   const [colorBotonPedido, setColorBotonPedido] = useState("#fff")
 
-  const {updatePedido, traerPedidoPorId} = usePedidosPresenter()
-  
+  const { updatePedido, traerPedidoPorId } = usePedidosPresenter()
+
   let pedidoTexto = pedido.descripcion;
   const total = pedidoTexto.indexOf("*Total:*");
   const totalTexto = pedidoTexto.substr(total + 8);
@@ -55,25 +55,25 @@ const CardPedido = (props)=> {
     setExpanded(!expanded);
   };
 
-  const changeEstadoPedido = async ()=>{
-      if(pedido.estado === "pendiente"){
-        await updatePedido("cancelado", pedido)
-      } else if( pedido.estado === "cancelado"){
-          await updatePedido("pendiente", pedido)
-      } //else alert("no se puede cancelar un pedido procesado")
+  const changeEstadoPedido = async () => {
+    if (pedido.estado === "pendiente") {
+      await updatePedido("cancelado", pedido)
+    } else if (pedido.estado === "cancelado") {
+      await updatePedido("pendiente", pedido)
+    } //else alert("no se puede cancelar un pedido procesado")
 
-      const res = await traerPedidoPorId(pedido.idPedido)
-      setPedido(res)
+    const res = await traerPedidoPorId(pedido.idPedido)
+    setPedido(res)
 
   }
 
   useEffect(() => {
-    switch(pedido.estado){
-      case("pendiente"):
-        setColorBotonPedido("#ffc107" )
+    switch (pedido.estado) {
+      case ("pendiente"):
+        setColorBotonPedido("#ffc107")
         break
-      case("cancelado"):
-        setColorBotonPedido("#bf280a" )
+      case ("cancelado"):
+        setColorBotonPedido("#bf280a")
         break
     }
   }, [pedido])
@@ -100,9 +100,9 @@ const CardPedido = (props)=> {
             className={classes.media}
             image="https://previews.123rf.com/images/captainvector/captainvector1705/captainvector170506588/77175739-concepto-de-pedido-de-comida-en-l%C3%ADnea.jpg"
           />
-          <CardContent style={{ "padding": "0px" }}>        
+          <CardContent style={{ "padding": "0px" }}>
             <IconButton disabled label>
-              <RoomIcon /> 
+              <RoomIcon />
               <Typography>{pedido.direccion}</Typography>
             </IconButton>
           </CardContent>
@@ -115,10 +115,10 @@ const CardPedido = (props)=> {
             </Typography>
           </CardContent>
           <CardActions disableSpacing style={{ padding: "16px" }}>
-            <Button variant="contained" style={{ backgroundColor:  pedido.estado === "pendiente" ? "#ffc107" : "#bf280a" }} onClick={changeEstadoPedido}>
+            <Button variant="contained" style={{ backgroundColor: pedido.estado === "pendiente" ? "#ffc107" : "#bf280a" }} onClick={changeEstadoPedido}>
               {pedido.estado}
             </Button>
-            
+
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
