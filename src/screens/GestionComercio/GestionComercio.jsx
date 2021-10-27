@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { FormLocal } from '../../components/FormLocal';
-import { TextField, Grid, LinearProgress, Button, MenuItem, Typography, Box, Paper, IconButton, Divider, FormControl, InputLabel, Select } from '@material-ui/core';
+import { TextField, Grid, LinearProgress, Button, MenuItem, Typography, Box, Paper, IconButton, Divider, FormControl, Checkbox, FormControlLabel } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Cancel } from '@material-ui/icons'
 
@@ -42,6 +42,7 @@ const GestionComercio = () => {
     const [idUser, setIdUser] = useState(0);
     const [productos, setProductos] = useState([])
     const [cargando, setCargando] = useState(true);
+    const [verPedidosActivos, setVerPedidosActivos] = useState(true);
 
 
     //******************** 
@@ -144,10 +145,26 @@ const GestionComercio = () => {
                 <Grid item container md={4} xs={12}>
                     {/* Pedidos */}
                     <Box height="100%" width="95%" mt={3}>
+                        <Box m={1}>
+                            <Paper >
+                                <Box p={2}>Ver pedidos activos: <FormControlLabel
+                                    control={<Checkbox
+                                        name="visible"
+                                        onChange={() => { setVerPedidosActivos(!verPedidosActivos) }}
+                                        checked={verPedidosActivos}
+                                    />}
+                                /></Box>
+                            </Paper>
+                        </Box>
                         {
-                            pedidos.map(p => {
-                                return <Pedido key={p.idPedido} pedido={p} updatePedido={updatePedido} />
-                            })
+                            verPedidosActivos ?
+                                pedidos.filter(pedido => pedido.estado !== 'cancelado' && pedido.estado !== 'entregado').map(p => {
+                                    return <Pedido key={p.idPedido} pedido={p} updatePedido={updatePedido} />
+                                })
+                                :
+                                pedidos.map(p => {
+                                    return <Pedido key={p.idPedido} pedido={p} updatePedido={updatePedido} />
+                                })
                         }
                     </Box>
                 </Grid>
@@ -165,8 +182,6 @@ const Pedido = (props) => {
     const [items, setItems] = useState([]);
     const [precio, setPrecio] = useState("");
     const [estado, setEstado] = useState(pedido.estado);
-
-
 
     const estados = ['cancelado', 'pendiente', 'en proceso', 'enviado', 'entregado'];
 

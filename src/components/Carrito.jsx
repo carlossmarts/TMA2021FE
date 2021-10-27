@@ -150,8 +150,9 @@ export const Carrito = (props) => {
                             </div>
                         </> :
                         <>
-                            <h2 style={{ 'text-align': 'center' }}>Realizaste tu pedido!</h2>
-                            <Button onClick={(e) => {window.open(url, "_blank")}}>Mirá el estado de tu pedido acá</Button>
+                            <h2 style={{ 'text-align': 'center' }}>¡Realizaste tu pedido!</h2>
+                            <h3 style={{ 'text-align': 'center' }}>Numero de pedido: {`${idPedido}`}</h3>
+                            <h5 style={{ 'text-align': 'center' }}> <Button onClick={(e) => {window.open(url, "_blank")}}>Mirá el estado de tu pedido acá</Button></h5>
                         </>}
                 </Box>
             </Paper >
