@@ -70,6 +70,10 @@ export const Estilos = theme => {
       display: 'block',
       maxWidth: '100%',
       maxHeight: '100%',
+    },
+    noBorder: {
+      border: "none",
+      fontSize: 40
     }
   })
 };
