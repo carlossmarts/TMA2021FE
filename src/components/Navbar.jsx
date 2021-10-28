@@ -17,15 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = (props) => {
 
-    //******************** 
-    // Props
-    //********************
-    
-    const {
-        setOpenRegistro,
-        setOpenLogin,
-        setIdUser
-      } = props;
+    const {setOpenBuscarPedido, url} = props
 
     const classes = useStyles();
 
@@ -42,7 +34,7 @@ const Navbar = (props) => {
       setAnchorEl(null);
     };
 
-    const abrirModalRegistro = ()=>{
+    const irARegistro = ()=>{
         handleClose();
         history.push("/registro")
     }
@@ -52,13 +44,8 @@ const Navbar = (props) => {
         history.push("/login");
     }
 
-    const abrirModalLogin = ()=>{
-        setOpenLogin(true);
-        handleClose();
-    }
-
     const cerrarSesion = ()=>{
-        setIdUser(0)
+        localStorage.setItem("idUsuario", "0")
         handleClose()
         irAHome()
     }
@@ -68,6 +55,8 @@ const Navbar = (props) => {
           pathname:"/"
         })
       }
+
+    
       
     return (
         <div>
@@ -75,7 +64,9 @@ const Navbar = (props) => {
                 <Toolbar>
                     <Grid container spacing={1} alignItems="center">
                         <Grid item container xs={6} justifyContent="flex-start">
-                            <Typography variant="h6" > PedidosYa</Typography>
+                            <IconButton aria-label="" onClick={irAHome}>
+                                <Typography variant="h6" style={{color:"#fff"}} > PedidosYa</Typography>
+                            </IconButton>
                         </Grid>
                         <Grid item container xs={6} justifyContent="flex-end" spacing={4}>
 
@@ -94,7 +85,18 @@ const Navbar = (props) => {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={abrirModalRegistro}>Registrar mi comercio</MenuItem>
+                                {
+                                    url.includes("pedido")?
+                                        null
+                                    :
+                                        <>
+                                            <MenuItem onClick={()=> {setOpenBuscarPedido(true); handleClose()}} > Buscar pedidos </MenuItem>
+                                            <Divider/>
+                                        </>
+                                }
+                                
+
+                                <MenuItem onClick={irARegistro}>Registrar mi comercio</MenuItem>
 
                                 {
                                     parseInt(localStorage.getItem("idUsuario")) === 0
@@ -105,6 +107,7 @@ const Navbar = (props) => {
                                 }
 
                                 <Divider/>
+
                                 <MenuItem onClick={handleClose}>cerrar</MenuItem>
 
 

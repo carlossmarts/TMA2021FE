@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useComercioPresenter } from '../../presenter/comerciosPresenter'
 import { useComidaPresenter } from '../../presenter/comidasPresenter'
+import { usePedidosPresenter } from '../../presenter/pedidosPresenter'
+
 import Typography from '@material-ui/core/Typography'
 import { Carrito } from '../../components/Carrito'
 import { ListaProductos } from '../../components/ListaProductos'
 import { LinearProgress, Grid, Box } from '@material-ui/core';
+import CardLocalDetallado from '../../components/CardLocalDetallado'
 
 const Comercio = () => {
 
     //Hooks
     const { id } = useParams()
     const { traerComercioPorId } = useComercioPresenter()
+    const { crearPedido } = usePedidosPresenter();
     const { comidas, setComidas, traerComidasPorComercio } = useComidaPresenter();
 
     //Estados
@@ -57,16 +61,35 @@ const Comercio = () => {
         }
     };
 
+    const onRemove = (product) => {
+        const exist = cartItems.find((x) => x.idProducto === product.idProducto);
+        if (exist) {
+            setCartItems(
+                cartItems.map((x) =>
+                    x.idProducto === product.idProducto ? { ...exist, qty: exist.qty - 1 } : x
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...product, qty: 1 }]);
+        }
+    };
+
+    const onDelete = (product) => {
+        const exist = cartItems.find((x) => x.idProducto === product.idProducto);
+        if (exist) {
+            setCartItems(
+                cartItems.filter((x) =>
+                    x.idProducto !== product.idProducto
+                )
+            );
+        } else {
+            setCartItems([...cartItems, { ...product, qty: 1 }]);
+        }
+    };
+
     return (
         <div>
-            <Box px={5} m={2} display="flex" justifyContent="center">
-                <Typography variant="h4" color="initial" style={{ fontWeight: "bold" }}>
-                    {comercio ?
-                        comercio.nombre
-                        : "El comercio no existe"
-                    }
-                </Typography>
-            </Box>
+            <CardLocalDetallado comercio={comercio} />
             <Grid container
                 direction="row"
                 justifyContent="center"
@@ -81,7 +104,11 @@ const Comercio = () => {
                 <Carrito
                     telefono={comercio.telefono}
                     cartItems={cartItems}
+                    idComercio = {id}
                     onAdd={onAdd}
+                    onDelete={onDelete}
+                    onRemove={onRemove}
+                    crearPedido={crearPedido}
                 ></Carrito>
             </Grid>
         </div >

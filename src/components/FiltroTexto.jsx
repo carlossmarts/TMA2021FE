@@ -15,7 +15,7 @@ export const FiltroTexto = (props) => {
             container
             spacing={8}
             direction="row"
-            justify="center"
+            justifyContent="center"
             alignItems="center"
             alignContent="center"
             wrap="nowrap"

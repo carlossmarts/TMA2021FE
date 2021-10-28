@@ -14,7 +14,7 @@ export const ListaProductos = (props) => {
                 direction="column"
                 alignItems="center"
             >
-                {comidas.map(comida => {
+                {comidas.filter(comida => comida.visible).map(comida => {
                     return <CardComida comida={comida} onAdd={onAdd} />
                 })
                 }
