@@ -13,7 +13,7 @@ import { usePedidosPresenter } from '../presenter/pedidosPresenter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345
+    width: 345
   },
   media: {
     height: 0,
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CardPedido = (props) => {
 
-  const { pedido, setPedido, local, traerPedidoPorId, updatePedido} = props;
+  const { pedido, setPedido, local, traerPedidoPorId, updatePedido } = props;
 
   const classes = useStyles();
 
@@ -52,6 +52,25 @@ const CardPedido = (props) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  let textoPedido = pedido.descripcion;
+  textoPedido = textoPedido.slice(textoPedido.indexOf('\n'), textoPedido.lastIndexOf(')') + 2)
+  textoPedido = textoPedido.replaceAll("\\n", "");
+
+  let totalTextos = pedido.descripcion.slice(pedido.descripcion.indexOf('*T'), pedido.descripcion.length);
+  totalTextos = totalTextos.replaceAll("*", "");
+
+
+  const formatFechaHora = (fechaHora) => {
+    const fecha = fechaHora.split("T")[0]
+    const hora = fechaHora.split("T")[1]
+
+    const formatFecha = fecha.split("-").reverse().join("-")
+
+    return `${formatFecha} - ${hora}`
+  }
+
+  let hora = formatFechaHora(pedido.fechaHoraPedido);
 
   const changeEstadoPedido = async () => {
     if (pedido.estado === "pendiente") {
@@ -83,7 +102,6 @@ const CardPedido = (props) => {
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar} src={local.logo}>
-
               </Avatar>
             }
             action={
@@ -92,7 +110,7 @@ const CardPedido = (props) => {
               </IconButton>
             }
             title={local.nombre}
-            subheader="Octubre 21 03:07 AM, 2021"
+            subheader={hora}
           />
           <CardMedia
             className={classes.media}
@@ -106,10 +124,10 @@ const CardPedido = (props) => {
           </CardContent>
           <CardContent style={{ paddingTop: "0px", paddingBottom: "0px" }}>
             <Typography variant="body2" color="textSecondary" component="p">
-              {pedidoTexto}
+              {textoPedido}
             </Typography>
             <Typography variant="h6" component="p">
-              {totalTexto}
+              {totalTextos}
             </Typography>
           </CardContent>
           <CardActions disableSpacing style={{ padding: "16px" }}>

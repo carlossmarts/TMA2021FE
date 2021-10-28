@@ -177,27 +177,38 @@ export default GestionComercio;
 const Pedido = (props) => {
     const { pedido, updatePedido } = props;
     const classes = useStyles()
-
-    const [items, setItems] = useState([]);
-    const [precio, setPrecio] = useState("");
     const [estado, setEstado] = useState(pedido.estado);
-
     const estados = ['cancelado', 'pendiente', 'en proceso', 'enviado', 'entregado'];
 
-    useEffect(() => {
-        /*str = Hola, vi tu menu en PedidosYa y quiero hacer el siguiente pedido: 
-                Mega Classic Not Burger (1 x $201.00) 
-                Mega Deluxe Not Burger (1 x $555.00) 
-                *Total:* $845.*/
+    let textoPedido = pedido.descripcion;
+    textoPedido = textoPedido.slice(textoPedido.indexOf('\n'), textoPedido.lastIndexOf(')') + 2)
+    textoPedido = textoPedido.replaceAll("\\n", "");
 
+    const formatFechaHora = (fechaHora) => {
+        const fecha = fechaHora.split("T")[0]
+        const hora = fechaHora.split("T")[1]
 
-        console.log(pedido)
-        const strSplit = pedido.descripcion.split("\n")
-        const items = strSplit.slice(1, strSplit.length - 2)
-        const precio = strSplit[strSplit.length - 1]
-        setItems(items)
-        setPrecio(precio ? precio.replace("*Total:*", "").replace("\\n", "").replace("\\r", "") : "")
-    }, [])
+        const formatFecha = fecha.split("-").reverse().join("-")
+
+        return `Fecha: ${formatFecha}, Hora: ${hora}`
+    }
+
+    let hora = formatFechaHora(pedido.fechaHoraPedido);
+    let precio = pedido.descripcion.slice(pedido.descripcion.indexOf('*T'), pedido.descripcion.length);
+    precio = precio.replaceAll("*", "");
+
+    // useEffect(() => {
+    //     /*str = Hola, vi tu menu en PedidosYa y quiero hacer el siguiente pedido: 
+    //             Mega Classic Not Burger (1 x $201.00) 
+    //             Mega Deluxe Not Burger (1 x $555.00) 
+    //             *Total:* $845.*/
+    //     console.log(pedido)
+    //     const strSplit = pedido.descripcion.split("\n")
+    //     const items = strSplit.slice(1, strSplit.length - 2)
+    //     const precio = strSplit[strSplit.length - 1]
+    //     setItems(items)
+    //     setPrecio(precio ? precio.replace("*Total:*", "").replace("\\n", "").replace("\\r", "") : "")
+    // }, [])
 
     const handleChange = (event) => {
         console.log('Estado: ' + event.target.value)
@@ -255,15 +266,11 @@ const Pedido = (props) => {
                                         <Typography variant="body2" color="initial">Items:</Typography>
                                     </Grid>
                                     <Grid item xs={8} >
-                                        {
-                                            items.map(item => {
-                                                return (
-                                                    <Grid item xs={12}>
-                                                        <Typography variant="caption">{`* ${item.replace("\\n", "")}`}</Typography>
-                                                    </Grid>
-                                                )
-                                            })
-                                        }
+
+                                        <Grid item xs={12}>
+                                            <Typography variant="caption">{`${textoPedido}`}</Typography>
+                                        </Grid>
+
                                     </Grid>
                                 </Grid>
 
@@ -279,6 +286,13 @@ const Pedido = (props) => {
                                 </Grid>
                                 <Grid item xs={8}>
                                     <Typography variant="caption" color="initial">{precio}</Typography>
+                                </Grid>
+
+                                <Grid item xs={4}>
+                                    <Typography variant="body2" color="initial">Realizado:</Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography variant="caption" color="initial">{hora}</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
