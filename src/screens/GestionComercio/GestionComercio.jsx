@@ -184,6 +184,16 @@ const Pedido = (props) => {
     textoPedido = textoPedido.slice(textoPedido.indexOf('\n'), textoPedido.lastIndexOf(')') + 2)
     textoPedido = textoPedido.replaceAll("\\n", "");
 
+    const formatFechaHora = (fechaHora) => {
+        const fecha = fechaHora.split("T")[0]
+        const hora = fechaHora.split("T")[1]
+
+        const formatFecha = fecha.split("-").reverse().join("-")
+
+        return `Fecha: ${formatFecha}, Hora: ${hora}`
+    }
+
+    let hora = formatFechaHora(pedido.fechaHoraPedido);
     let precio = pedido.descripcion.slice(pedido.descripcion.indexOf('*T'), pedido.descripcion.length);
     precio = precio.replaceAll("*", "");
 
@@ -282,7 +292,7 @@ const Pedido = (props) => {
                                     <Typography variant="body2" color="initial">Realizado:</Typography>
                                 </Grid>
                                 <Grid item xs={8}>
-                                    <Typography variant="caption" color="initial">{pedido.fechaHoraPedido}</Typography>
+                                    <Typography variant="caption" color="initial">{hora}</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>

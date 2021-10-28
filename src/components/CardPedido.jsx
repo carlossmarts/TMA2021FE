@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CardPedido = (props) => {
 
-  const { pedido, setPedido, local, traerPedidoPorId, updatePedido} = props;
+  const { pedido, setPedido, local, traerPedidoPorId, updatePedido } = props;
 
   const classes = useStyles();
 
@@ -53,12 +53,24 @@ const CardPedido = (props) => {
     setExpanded(!expanded);
   };
 
- let textoPedido = pedido.descripcion;
- textoPedido = textoPedido.slice(textoPedido.indexOf('\n'),textoPedido.lastIndexOf(')')+2)
- textoPedido = textoPedido.replaceAll("\\n", "");
+  let textoPedido = pedido.descripcion;
+  textoPedido = textoPedido.slice(textoPedido.indexOf('\n'), textoPedido.lastIndexOf(')') + 2)
+  textoPedido = textoPedido.replaceAll("\\n", "");
 
- let totalTextos = pedido.descripcion.slice(pedido.descripcion.indexOf('*T'),pedido.descripcion.length);
- totalTextos= totalTextos.replaceAll("*", "");
+  let totalTextos = pedido.descripcion.slice(pedido.descripcion.indexOf('*T'), pedido.descripcion.length);
+  totalTextos = totalTextos.replaceAll("*", "");
+
+
+  const formatFechaHora = (fechaHora) => {
+    const fecha = fechaHora.split("T")[0]
+    const hora = fechaHora.split("T")[1]
+
+    const formatFecha = fecha.split("-").reverse().join("-")
+
+    return `${formatFecha} - ${hora}`
+  }
+
+  let hora = formatFechaHora(pedido.fechaHoraPedido);
 
   const changeEstadoPedido = async () => {
     if (pedido.estado === "pendiente") {
@@ -98,7 +110,7 @@ const CardPedido = (props) => {
               </IconButton>
             }
             title={local.nombre}
-            subheader= {pedido.fechaHoraPedido}
+            subheader={hora}
           />
           <CardMedia
             className={classes.media}
