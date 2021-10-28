@@ -13,7 +13,6 @@ import { useCategoriasPresenter } from '../../presenter/categoriasPresenter';
 
 import { DataGrid } from '@material-ui/data-grid';
 import TablaProductos from '../../components/TablaProductos';
-import ModalProducto from '../../components/ModalProducto';
 
 import { makeStyles } from '@material-ui/styles';
 import { Estilos } from '../../style/estilos';

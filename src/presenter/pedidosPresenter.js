@@ -24,13 +24,19 @@ export const usePedidosPresenter = ()=>{
         const res = await PedidosApi.updatePedido(estado, body);
         return res;
     }
-    
+ 
+    const actualizarPedidoCompleto = async(body) =>{
+        const res = await PedidosApi.actualizarPedidoCompleto(body);
+        return res;
+    }
+
     return {
         pedidos,
         crearPedido,
         setPedidos,
         traerPedidoPorId,
         updatePedido,
-        traerPedidosPorIdComercio
+        traerPedidosPorIdComercio,
+        actualizarPedidoCompleto
     }
 }

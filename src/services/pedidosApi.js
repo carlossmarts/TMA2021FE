@@ -40,6 +40,17 @@ export const PedidosApi = {
         } catch (err) {
             console.error(err)
         }
+    },
+
+    actualizarPedidoCompleto: async (body) => {
+        try {
+            console.log(JSON.stringify(body));
+            const res = await axios.put(`https://dry-thicket-39505.herokuapp.com/api/Pedido/UpdatetPedido`, body);
+            const locs = await res;
+            return locs
+        } catch (err) {
+            console.error(err)
+        }
     }
 
 }

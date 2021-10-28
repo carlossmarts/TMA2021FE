@@ -36,15 +36,13 @@ const useStyles = makeStyles((theme) => ({
 
 const CardPedido = (props) => {
 
-  const { pedido, setPedido, local } = props;
+  const { pedido, setPedido, local, traerPedidoPorId, updatePedido} = props;
 
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(false);
 
   const [colorBotonPedido, setColorBotonPedido] = useState("#fff")
-
-  const { updatePedido, traerPedidoPorId } = usePedidosPresenter()
 
   let pedidoTexto = pedido.descripcion;
   const total = pedidoTexto.indexOf("*Total:*");
@@ -79,7 +77,7 @@ const CardPedido = (props) => {
   }, [pedido])
 
   return (
-    <Box style={{ padding: "50px" }}>
+    <Box pt={4} pb={1}>
       <Paper>
         <Card className={classes.root}>
           <CardHeader
@@ -132,7 +130,7 @@ const CardPedido = (props) => {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>Comentarios:</Typography>
+              <Typography paragraph>Indicaciones del pedido:</Typography>
               <Typography paragraph>
                 {pedido.comentarios}
               </Typography>
