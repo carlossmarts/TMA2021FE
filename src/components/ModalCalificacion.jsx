@@ -39,7 +39,10 @@ const ModalCalificacion = (props) => {
     }, [])
 
     const handleInputChange = (event) => {
-        console.log(event.target.name)
+        setPedido({
+            ...pedido,
+            [event.target.name]: event.target.value
+        })
     }
 
     const guardarComentario = () => {
@@ -85,7 +88,7 @@ const ModalCalificacion = (props) => {
                                             label=""
                                             variant="outlined"
                                             fullWidth
-                                            name="comentario"
+                                            name="opinion"
                                             multiline
                                             rows={4}
                                             onChange={handleInputChange}

@@ -53,6 +53,13 @@ const CardPedido = (props) => {
     setExpanded(!expanded);
   };
 
+ let textoPedido = pedido.descripcion;
+ textoPedido = textoPedido.slice(textoPedido.indexOf('\n'),textoPedido.lastIndexOf(')')+2)
+ textoPedido = textoPedido.replaceAll("\\n", "");
+
+ let totalTextos = pedido.descripcion.slice(pedido.descripcion.indexOf('*T'),pedido.descripcion.length);
+ totalTextos= totalTextos.replaceAll("*", "");
+
   const changeEstadoPedido = async () => {
     if (pedido.estado === "pendiente") {
       await updatePedido("cancelado", pedido)
@@ -83,7 +90,6 @@ const CardPedido = (props) => {
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar} src={local.logo}>
-
               </Avatar>
             }
             action={
@@ -92,7 +98,7 @@ const CardPedido = (props) => {
               </IconButton>
             }
             title={local.nombre}
-            subheader="Octubre 21 03:07 AM, 2021"
+            subheader= {pedido.fechaHoraPedido}
           />
           <CardMedia
             className={classes.media}
@@ -106,10 +112,10 @@ const CardPedido = (props) => {
           </CardContent>
           <CardContent style={{ paddingTop: "0px", paddingBottom: "0px" }}>
             <Typography variant="body2" color="textSecondary" component="p">
-              {pedidoTexto}
+              {textoPedido}
             </Typography>
             <Typography variant="h6" component="p">
-              {totalTexto}
+              {totalTextos}
             </Typography>
           </CardContent>
           <CardActions disableSpacing style={{ padding: "16px" }}>
