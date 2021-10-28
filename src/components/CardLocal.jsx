@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import StarIcon from '@material-ui/icons/Star';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => Estilos(theme));
@@ -13,9 +14,8 @@ const useStyles = makeStyles((theme) => Estilos(theme));
 export const CardLocal = (props) => {
   //Estilos
   const classes = useStyles();
-
   //parametros
-  const { idComercio, nombreLocal, telefono, urlLogo } = props;
+  const { idComercio, nombreLocal, telefono, urlLogo, promCalificacion } = props;
 
   //hooks
   const history = useHistory()
@@ -49,11 +49,14 @@ export const CardLocal = (props) => {
                 <PhoneIcon fontSize="small" />
                 Teléfono: {telefono}
               </Typography>
+              <Typography style={{ 'display': 'flex' }}>
+                <StarIcon /> {promCalificacion}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Box>
+    </Box >
   );
 };
 
