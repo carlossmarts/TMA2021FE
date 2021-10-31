@@ -74,6 +74,17 @@ export const Estilos = theme => {
     noBorder: {
       border: "none",
       fontSize: 40
+    },
+    bgImageHome:{
+      "background-image": "url('https://images.deliveryhero.io/image/pedidosya/home-backgrounds/home-background-ar.jpg?quality=100&width=1345),url(https://images.deliveryhero.io/image/pedidosya/home-backgrounds/home-background-others.jpg?quality=100&width=1345')",
+      "background-position": "center center",
+      "background-repeat": "no-repeat",
+      "background-attachment": "fixed",
+      "background-size": "cover",
+      "height":"100vh"
+    },
+    buscarLocales:{
+      "background-color":"#ffffff"
     }
   })
 };

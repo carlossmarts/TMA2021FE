@@ -11,7 +11,6 @@ import Login from './screens/Login'
 import Registro from './screens/Registro'
 
 const App = () => {
-
   const [openBuscarPedido, setOpenBuscarPedido] = useState(false)
   const [url, setUrl] = useState(window.location.href)
 
