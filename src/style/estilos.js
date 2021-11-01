@@ -84,7 +84,7 @@ export const Estilos = theme => {
       "height":"100vh"
     },
     buscarLocales:{
-      "background-color":"#ffffff"
+      "background-color":"#ffffff",
     }
   })
 };
