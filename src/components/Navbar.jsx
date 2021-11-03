@@ -54,6 +54,7 @@ const Navbar = (props) => {
     }
 
     const irAHome = ()=>{
+        console.log("ir a home")
         history.push({
           pathname:"/"
         })
