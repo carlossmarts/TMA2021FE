@@ -25,6 +25,9 @@ const Navbar = (props) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
 
+    useEffect(() => {
+        irAHome()
+    }, [])
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
