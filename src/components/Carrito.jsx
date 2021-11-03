@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { useHistory } from 'react-router-dom';
 
 export const Carrito = (props) => {
+
     const { telefono, cartItems, onAdd, onDelete, onRemove, crearPedido, idComercio } = props;
     const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.precio, 0);
     const shippingPrice = 89
@@ -16,6 +18,7 @@ export const Carrito = (props) => {
     const [mensaje, setMensaje] = useState('');
     const [url, setUrl] = useState('')
     const [pedidoRealizado, setPedidoRealizado] = useState(false);
+    const history = useHistory()
 
     useEffect(() => {
         let text =
@@ -55,6 +58,10 @@ export const Carrito = (props) => {
             }
         })
     }
+
+    const irAPedido = () => {
+        history.push(`/pedido/${idPedido}`)
+      }
 
     return (
         <Box height="75%" width='35%' px={2}>
@@ -152,7 +159,7 @@ export const Carrito = (props) => {
                         <>
                             <h2 style={{ 'text-align': 'center' }}>¡Realizaste tu pedido!</h2>
                             <h3 style={{ 'text-align': 'center' }}>Numero de pedido: {`${idPedido}`}</h3>
-                            <h5 style={{ 'text-align': 'center' }}> <Button onClick={(e) => {window.open(url, "_blank")}}>Mirá el estado de tu pedido acá</Button></h5>
+                            <h5 style={{ 'text-align': 'center' }}> <Button onClick={/* (e) => {window.open(url, "_blank")} */ irAPedido}>Mirá el estado de tu pedido acá</Button></h5>
                         </>}
                 </Box>
             </Paper >

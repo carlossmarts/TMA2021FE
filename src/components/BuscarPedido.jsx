@@ -23,6 +23,7 @@ export const BuscarPedido = (props) => {
   const irAComercio = () => {
     history.push(`/pedido/${pedido}`)
   }
+  
   const handleInputChange = (event) => {
     setPedido(event.target.value)
   }
