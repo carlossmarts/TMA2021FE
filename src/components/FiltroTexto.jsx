@@ -28,7 +28,7 @@ export const FiltroTexto = (props) => {
                         id={nombre}
                         options={opciones}
                         getOptionLabel={op => op.nombre}
-                        renderInput={(params) => <TextField {...params} label={`ingresar ${nombre}`} variant="outlined" />}
+                        renderInput={(params) => <TextField style={{ backgroundColor: '#ffffff','border-radius': '100px' }} {...params} label={`ingresar ${nombre}`} />}
                         onChange={(event, value) => setValor(value)}
                     >
                     </Autocomplete>
