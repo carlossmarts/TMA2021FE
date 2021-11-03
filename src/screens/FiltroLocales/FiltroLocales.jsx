@@ -9,7 +9,7 @@ import { ListaCategorias } from '../../components/ListaCategorias';
 import { FiltroNombreProducto } from '../../components/FiltroNombreProducto';
 
 
-const FiltroLocales = () => {
+const FiltroLocales = ({setBackground}) => {
 
   //estados
   const [cargando, setCargando] = useState(true);
@@ -38,6 +38,7 @@ const FiltroLocales = () => {
 
   useEffect(() => {
     if (localidad) {
+      setBackground(false)
       setCargandoComercios(true)
       traerComerciosPorLocalidad(localidad.nombre).then((data) => {
         setComercios(data)
@@ -47,8 +48,11 @@ const FiltroLocales = () => {
         })
       }
       ).catch(err => console.log(err))
-    } else
+    } else{
       setCargandoComercios(true)
+      setBackground(true)
+    }
+
   }, [localidad])
 
   useEffect(() => {
