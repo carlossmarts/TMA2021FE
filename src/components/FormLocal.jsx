@@ -42,6 +42,10 @@ export const FormLocal = (props) => {
         setState(!state);
     };
 
+    useEffect(() => {
+        console.log(localContent)
+    }, [])
+
     return (
         <Grid container justify="center">
             <Box pt={5} style={{ width: '90%' }}>
@@ -49,7 +53,7 @@ export const FormLocal = (props) => {
                     <Box p={5}>
                         <Box mb={3}>
                             <Typography variant="h6" gutterBottom>
-                                {` Pedidos Ya - Usuario ${localStorage.getItem("user")} - Información del Local`}
+                                {` Pedidos Ya - Usuario: ${localContent.usuario.username} - Información del Local`}
                                 <IconButton
                                     onClick={handleExpandClick}
                                 >
